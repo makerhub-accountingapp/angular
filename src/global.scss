@@ -37,9 +37,14 @@
 @import '@ionic/angular/css/palettes/dark.system.css';
 
 
-.thin-border {
-  border-width: 1px;
-  border-style: solid;
+.border-solid-light {
+  border: solid 1px;
+}
+
+.radius-light {
   border-radius: 8px;
+}
+
+.pointer {
   cursor: pointer;
 }
