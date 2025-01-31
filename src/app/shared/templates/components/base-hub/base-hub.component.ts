@@ -12,7 +12,7 @@ export class BaseHubComponent<
   TUpdateForm,
   TService extends BaseHubService<TEntity, TCreateForm, TUpdateForm>
 > {
-  private service!: TService;
+  protected service!: TService;
   entities: TEntity[] = [];
   entity?: TEntity;
 

@@ -3,7 +3,7 @@ import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { BaseService } from './base.service';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 export class BaseHubService<TEntity, TCreateForm, TUpdateForm> extends BaseService<TEntity, TCreateForm, TUpdateForm> {
 

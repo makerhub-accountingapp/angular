@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class BaseService<TEntity, TCreateForm, TUpdateForm> {
 
-  private apiUrl: string = environment.apiUrl;
+  protected apiUrl: string = environment.apiUrl;
   protected entityName = '';
 
   constructor(protected http: HttpClient) {}
