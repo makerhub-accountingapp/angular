@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BaseHubService } from './base-hub.service';
+import { DetailService } from './detail.service';
 
-describe('BaseHubService', () => {
-  let service: BaseHubService;
+describe('HistoryService', () => {
+  let service: DetailService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(BaseHubService);
+    service = TestBed.inject(DetailService);
   });
 
   it('should be created', () => {

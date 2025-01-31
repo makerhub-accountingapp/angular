@@ -3,18 +3,18 @@ import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { BaseService } from './base.service';
+import { Injectable } from '@angular/core';
 
 export class BaseHubService<TEntity, TCreateForm, TUpdateForm> extends BaseService<TEntity, TCreateForm, TUpdateForm> {
 
   protected connection: HubConnection
-  protected entityName: string
 
   entities$!: BehaviorSubject<TEntity[]>
   entity$?: BehaviorSubject<TEntity>
 
   constructor(http: HttpClient, hubUrl: string, entityName: string) {
-    super(http, entityName);
-    this.entityName = entityName;
+    super(http);
+    this.setApiUrl(entityName)
 
     const builder: HubConnectionBuilder = new HubConnectionBuilder()
     this.connection = builder
