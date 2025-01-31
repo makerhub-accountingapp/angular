@@ -2,19 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { BaseService } from './base.service';
 
-export class BaseHubService<TEntity, TCreateForm, TUpdateForm> {
+export class BaseHubService<TEntity, TCreateForm, TUpdateForm> extends BaseService<TEntity, TCreateForm, TUpdateForm> {
 
   protected connection: HubConnection
   protected entityName: string
-  protected url: string
 
   entities$!: BehaviorSubject<TEntity[]>
   entity$?: BehaviorSubject<TEntity>
 
-  constructor(protected http: HttpClient, hubUrl: string, TEntityName: string) {
-    this.entityName = TEntityName;
-    this.url = `${environment.apiUrl}/${this.entityName}`;
+  constructor(http: HttpClient, hubUrl: string, entityName: string) {
+    super(http, entityName);
+    this.entityName = entityName;
 
     const builder: HubConnectionBuilder = new HubConnectionBuilder()
     this.connection = builder
@@ -45,27 +45,6 @@ export class BaseHubService<TEntity, TCreateForm, TUpdateForm> {
     this.connection.on(`ReceiveUpdate${this.entityName}`, data => {
       this.entity$?.next(data);
     });
-  }
-
-  // Send requests to server
-  create(form: TCreateForm): Observable<TEntity> {
-    return this.http.post<TEntity>(this.url, form)
-  }
-
-  delete(id: number): Observable<TEntity> {
-    return this.http.delete<TEntity>(`${this.url}/${id}`)
-  }
-
-  get(): Observable<TEntity[]> {
-    return this.http.get<TEntity[]>(this.url)
-  }
-
-  getById(id: number): Observable<TEntity> {
-    return this.http.get<TEntity>(`${this.url}/${id}`)
-  }
-
-  update(form: TUpdateForm): Observable<TEntity> {
-    return this.http.post<TEntity>(this.url, form)
   }
 
   /********** Note ***********/
