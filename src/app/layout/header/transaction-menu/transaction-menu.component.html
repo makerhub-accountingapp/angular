@@ -8,7 +8,7 @@
     <ion-list>
       @for (p of pages; track p; let i = $index) {
       <ion-menu-toggle auto-hide="false">
-        <ion-item class="border-solid-1 cursor-pointer radius-light" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"
+        <ion-item class="border-solid-light pointer radius-light" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"
           routerLinkActive="selected">
           <ion-avatar slot="start"><img [src]="'https://picsum.photos/80/80?random=' + $index" alt="avatar" /></ion-avatar>
           <ion-label>{{ p.title }}</ion-label>
