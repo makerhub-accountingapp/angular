@@ -6,8 +6,8 @@ export class BaseService<TEntity, TCreateForm, TUpdateForm> {
 
   private apiUrl: string;
 
-  constructor(private http: HttpClient, baseUrl: string) {
-    this.apiUrl = environment.apiUrl + baseUrl;
+  constructor(protected http: HttpClient, entityName: string) {
+    this.apiUrl = `${environment.apiUrl}/${entityName}`;
   }
 
   create(form: TCreateForm): Observable<TEntity> {
