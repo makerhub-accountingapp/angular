@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IonApp, IonRouterOutlet, IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonTitle, IonToolbar, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonSplitPane, IonAvatar } from '@ionic/angular/standalone';
+import { IonApp, IonRouterOutlet, IonContent } from '@ionic/angular/standalone';
+import { TransactionMenuComponent } from './layout/header/transaction-menu/transaction-menu.component';
+import { HeaderComponent } from './layout/header/header.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet, IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonTitle, IonToolbar, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, RouterModule, IonSplitPane, IonAvatar],
+  imports: [IonApp, IonRouterOutlet, IonContent, RouterModule, TransactionMenuComponent, HeaderComponent],
 
 })
 export class AppComponent {
