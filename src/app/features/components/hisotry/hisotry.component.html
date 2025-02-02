@@ -1,12 +1,12 @@
 <div class="list">
-  @for (entity of entities; track $index) {
+  @for (detail of details$ | async; track $index) {
   <div class="list-item border-solid-light radius-light">
     <div>
-      <p>{{ entity.transactionDate | date:'dd MMM yyyy HH:mm' }}</p>
+      <p>{{ detail.transactionDate | date:'dd MMM yyyy HH:mm' }}</p>
     </div>
     <div class="flex-row space-between">
-      <p>{{ entity.transaction.name }}</p>
-      <p>{{ entity.amount }}€</p>
+      <p>{{ detail.transaction.name }}</p>
+      <p>{{ detail.amount }}€</p>
     </div>
   </div>
   }

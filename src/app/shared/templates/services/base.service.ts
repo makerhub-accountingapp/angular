@@ -27,9 +27,7 @@ export class BaseService<TEntity, TCreateForm, TUpdateForm> {
   }
 
   get(): Observable<TEntity[]> {
-    const temp = this.http.get<TEntity[]>(this.apiUrl);
-    console.log(temp)
-    return temp;
+    return this.http.get<TEntity[]>(this.apiUrl);
   }
 
   getById(id: number): Observable<TEntity> {

@@ -47,6 +47,10 @@ div {
   border: solid 1px;
 }
 
+.radius-lighter {
+  border-radius: 2px;
+}
+
 .radius-light {
   border-radius: 8px;
 }
@@ -95,6 +99,14 @@ div {
   padding: 4px;
 }
 
+.padding-midium {
+  padding: 8px;
+}
+
 .text-150 {
   font-size: 150%;
+}
+
+.width-150px {
+  width: 150px;
 }

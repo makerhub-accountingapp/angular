@@ -1,5 +1,6 @@
 import { Component, inject, Inject, Injectable, OnInit } from '@angular/core';
 import { BaseService } from '../../services/base.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-base',
@@ -9,8 +10,6 @@ import { BaseService } from '../../services/base.service';
 export class BaseComponent<TEntity, TCreateForm, TUpdateForm, TService extends BaseService<TEntity, TCreateForm, TUpdateForm>> {
 
   protected service!: TService;
-  entities: TEntity[] = [];
-  entity?: TEntity;
 
   constructor() {}
 
@@ -18,33 +17,23 @@ export class BaseComponent<TEntity, TCreateForm, TUpdateForm, TService extends B
     this.service = service;
   }
 
-  create(form: TCreateForm): void {
-    this.service.create(form).subscribe(data => {
-      this.entity = data;
-    });
+  create(form: TCreateForm): Observable<TEntity> {
+    return this.service.create(form);
   }
 
-  delete(id: number): void {
-    this.service.delete(id).subscribe(data => {
-      this.entity = data;
-    });
+  delete(id: number): Observable<TEntity> {
+    return this.service.delete(id)
   }
 
-  get(): void {
-    this.service.get().subscribe(data => {
-    this.entities = data;  
-    });
+  get(): Observable<TEntity[]> {
+    return this.service.get();
   }
 
-  getById(id: number): void {
-    this.service.getById(id).subscribe(data => {
-      this.entity = data;
-    });
+  getById(id: number): Observable<TEntity> {
+    return this.service.getById(id)
   }
 
-  update(form: TUpdateForm): void {
-    this.service.update(form).subscribe(data => {
-      this.entity = data;
-    });
+  update(form: TUpdateForm): Observable<TEntity> {
+    return this.service.update(form)
   }
 }

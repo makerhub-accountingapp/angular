@@ -19,7 +19,5 @@ export class TransactionComponent extends BaseComponent<Transaction, Transaction
 
   ngOnInit() {
     this.get();
-    console.log(this.entities);
   }
-
 }
