@@ -36,7 +36,13 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
 
-
+p {
+  margin: 0;
+}
+div {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
 .border-solid-light {
   border: solid 1px;
 }
@@ -87,4 +93,8 @@
 
 .padding-light {
   padding: 4px;
+}
+
+.text-150 {
+  font-size: 150%;
 }

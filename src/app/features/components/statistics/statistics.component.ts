@@ -9,26 +9,7 @@ import { IonButton } from '@ionic/angular/standalone';
 })
 export class StatisticsComponent  implements OnInit {
 
-  isCategory: boolean = true;
-  filter: string = 'Category';
-  transactionTypes: string[] = [
-    'One-Time Payment',
-    'Monthly Payment',
-    'Savings',
-    'Wedding',
-    'Trip'
-  ];
-
   constructor() { }
 
   ngOnInit() {}
-
-  changeFileter() {
-    this.isCategory = !this.isCategory;
-    if (this.isCategory) {
-      this.filter = 'Category';
-    } else {
-      this.filter = 'Name';
-    }
-  }
 }
