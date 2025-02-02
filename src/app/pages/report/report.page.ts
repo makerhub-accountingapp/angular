@@ -24,11 +24,7 @@ export class ReportPage extends BaseComponent<TransactionType, TransactionTypeCr
   filter: string = 'Category';
   transactionTypes$: Observable<TransactionType[]> = new BehaviorSubject<TransactionType[]>([]);
 
-  selectedDate: Date = new Date();
-
-//   console.log(dayjs().startOf('month').format('YYYY-MM-DD')); // 今月の最初の日
-// console.log(dayjs().endOf('month').format('YYYY-MM-DD'));   // 今月の最後の日
-
+  selectedDate$: BehaviorSubject<Date> = new BehaviorSubject<Date>(dayjs().toDate());
 
   constructor(service: TransactionTypeService) { 
     super();
@@ -49,12 +45,12 @@ export class ReportPage extends BaseComponent<TransactionType, TransactionTypeCr
   }
 
   changeToNextMonth() {
-    if (dayjs().isAfter(this.selectedDate, 'month')) {
-      this.selectedDate = dayjs(this.selectedDate).add(1, 'month').toDate();
+    if (dayjs().isAfter(this.selectedDate$.value, 'month')) {
+      this.selectedDate$.next(dayjs(this.selectedDate$.value).add(1, 'month').toDate());
     }
   }
 
   changeToPreviousMonth() {
-      this.selectedDate = dayjs(this.selectedDate).add(-1, 'month').toDate();
+    this.selectedDate$.next(dayjs(this.selectedDate$.value).add(-1, 'month').toDate());
   }
 }

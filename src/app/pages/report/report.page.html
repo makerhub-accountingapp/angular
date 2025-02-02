@@ -2,14 +2,14 @@
 
   <div class="flex-row space-between ion-margin-bottom">
     <button (click)="changeToPreviousMonth()" class="text-150">&#60;</button>
-    <p>{{ selectedDate | date:'MMMM yyyy' }}</p>
+    <p>{{ selectedDate$.value | date:'MMMM yyyy' }}</p>
     <button (click)="changeToNextMonth()" class="text-150">&#62;</button>
   </div>
 
   <div class="flex-row space-between">
     <select>
       @for (type of transactionTypes$ | async; track $index) {
-        <option [value]="type.name">{{ type.name }}</option>
+        <option [value]="type.id">{{ type.name }}</option>
       }
     </select>
     <button (click)="changeFilter()" class="width-150px padding-midium border-solid-light radius-lighter">Currently filtered by {{ filter }}</button>
@@ -17,6 +17,6 @@
 
   <app-statistics></app-statistics>
 
-  <app-hisotry></app-hisotry>
+  <app-hisotry [selectedDate]="selectedDate$.value"></app-hisotry>
 
 </ion-content>
