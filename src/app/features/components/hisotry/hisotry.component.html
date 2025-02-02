@@ -2,7 +2,7 @@
   @for (entity of entities; track $index) {
   <div class="list-item">
     <div>
-      <p>{{ entity.transactionDate }}</p>
+      <p>{{ entity.transactionDate | date:'dd MMM yyyy HH:mm' }}</p>
     </div>
     <div class="flex-row space-between">
       <p>{{ entity.transaction.name }}</p>
