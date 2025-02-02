@@ -1,3 +1,13 @@
-<p>
-  statistics works!
-</p>
+<div class="ion-padding border-solid-light radius-light">
+  <div class="flex-row space-between">
+    <select>
+      @for (type of transactionTypes; track $index) {
+        <option [value]="type">{{ type }}</option>
+      }
+    </select>
+    <button (click)="changeFileter()" class="width-50 padding-light">Currently filtered by {{ filter }}</button>
+  </div>
+  <div>
+    <img src="../../../../assets/bar-graph.png" class="width-100 text-center" />
+  </div>
+</div>

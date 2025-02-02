@@ -1,4 +1,4 @@
-import { Component, Inject, Injectable, OnInit } from '@angular/core';
+import { Component, inject, Inject, Injectable, OnInit } from '@angular/core';
 import { BaseService } from '../../services/base.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { BaseService } from '../../services/base.service';
 })
 export class BaseComponent<TEntity, TCreateForm, TUpdateForm, TService extends BaseService<TEntity, TCreateForm, TUpdateForm>> {
 
-  private service!: TService;
+  protected service!: TService;
   entities: TEntity[] = [];
   entity?: TEntity;
 

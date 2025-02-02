@@ -48,3 +48,43 @@
 .pointer {
   cursor: pointer;
 }
+
+.list-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-end {
+  text-align: end;
+}
+
+.width-50 {
+  width: 50%;
+}
+
+.padding-light {
+  padding: 4px;
+}

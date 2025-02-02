@@ -19,3 +19,20 @@ export enum RepetitionEnum {
 	Monthly,
 	Yearly
 }
+
+export interface TransactionCreateForm {
+	name: string,
+	accountId: number,
+	repetition: RepetitionEnum,
+	setDate: Date,
+	endDate: Date,
+}
+
+export interface TransactionUpdateForm {
+	id: number,
+	name: string,
+	accountId: number,
+	repetition: RepetitionEnum,
+	setDate: Date,
+	endDate: Date,
+}

@@ -1,5 +1,5 @@
 export const environment = {
 	production: true,
-	apiUrl: "https://localhost:8100/api",
+	apiUrl: "https://localhost:7254/api",
 	detailHub: "/hub/Detail"
 }

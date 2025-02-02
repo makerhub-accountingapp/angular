@@ -36,8 +36,9 @@ export class BaseHubComponent<
 
   get(): void {
     this.service.entities$.subscribe((data) => {
-      next: this.entities = data;
+      next: this.entities = Array.isArray(data) ? data : [];
     });
+    console.log(this.entities)
   }
 
   getById(id: number): void {
