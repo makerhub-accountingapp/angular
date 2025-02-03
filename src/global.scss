@@ -36,9 +36,19 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
 
-
+p {
+  margin: 0;
+}
+div {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
 .border-solid-light {
   border: solid 1px;
+}
+
+.radius-lighter {
+  border-radius: 2px;
 }
 
 .radius-light {
@@ -47,4 +57,56 @@
 
 .pointer {
   cursor: pointer;
+}
+
+.list-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-end {
+  text-align: end;
+}
+
+.width-50 {
+  width: 50%;
+}
+
+.padding-light {
+  padding: 4px;
+}
+
+.padding-midium {
+  padding: 8px;
+}
+
+.text-150 {
+  font-size: 150%;
+}
+
+.width-150px {
+  width: 150px;
 }

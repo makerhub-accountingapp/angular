@@ -1,13 +1,21 @@
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class BaseService<TEntity, TCreateForm, TUpdateForm> {
 
-  private apiUrl: string;
+  protected apiUrl: string = environment.apiUrl;
+  protected entityName = '';
 
-  constructor(protected http: HttpClient, entityName: string) {
-    this.apiUrl = `${environment.apiUrl}/${entityName}`;
+  constructor(protected http: HttpClient) {}
+
+  setApiUrl(entityName: string) {
+    this.entityName = entityName;
+    this.apiUrl += `/${this.entityName}`;
   }
 
   create(form: TCreateForm): Observable<TEntity> {

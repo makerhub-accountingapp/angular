@@ -5,3 +5,12 @@ export interface TransactionType {
 	name: string,
 	details: Detail[]
 }
+
+export interface TransactionTypeCreateForm {
+	name: string
+}
+
+export interface TransactionTypeUpdateForm {
+	id: number,
+	name: string
+}
