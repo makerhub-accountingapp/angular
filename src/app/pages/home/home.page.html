@@ -1,3 +1,24 @@
 <ion-content class="ion-padding" [fullscreen]="true">
-  home works!
+  <div class="height-100 flex-column align-center space-around">
+    <div>
+      <div>
+        <p class="text-center text-250 bolder margin-wide">Available : {{ available }}€</p>
+      </div>
+      @if (!isEditing) {
+        <div>
+          <p class="text-center text-150 bold margin-wide" (click)="changeIsEditing()">Current balance : {{ balance }}€</p>
+        </div>
+      } @else {
+        <div class="flex-row space-between">
+          <input type="number" [(ngModel)]="balance" value="balance">
+          <button (click)="changeIsEditing()" class="padding-medium border-solid-light radius-lighter">Change</button>
+        </div>
+      }
+    </div>
+    <app-chart></app-chart>
+    <div class="width-100 flex-row align-center margin-wide space-around">
+      <p class="text-center text-150 bold">Add new transaction</p>
+      <img src="../../../assets/icon/plus.png" class="icon" (click)="redirectToInput()">
+    </div>
+  </div>
 </ion-content>
