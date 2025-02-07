@@ -36,6 +36,8 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
 
+@import "primeicons/primeicons.css";
+
 p {
   margin: 0;
 }
@@ -78,10 +80,6 @@ div {
 
 .align-center {
   align-items: center;
-}
-
-.justify-center {
-  justify-items: center;
 }
 
 .space-between {

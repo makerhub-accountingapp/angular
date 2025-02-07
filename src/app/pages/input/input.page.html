@@ -1,4 +1,29 @@
-<ion-content>
-  <p>transactionInput works !</p>
-  </ion-content>
-  
+<ion-content class="ion-padding">
+  <div class="flex-column height-100 space-between">
+    <p-floatlabel variant="on">
+      <input pSize="large" pInputText id="title" [(ngModel)]="title" autocomplete="off" />
+      <label for="on_label">Title</label>
+    </p-floatlabel>
+
+    <div>
+      @if (isPositive) {
+      <p-button icon="pi pi-plus" (onClick)="changePositiveNegative()" />
+      }
+      @else {
+      <p-button icon="pi pi-minus" (onClick)="changePositiveNegative()" />
+      }
+
+      <p-input-number size="small" [(ngModel)]="amount" inputId="minmax" mode="decimal" [min]="0" [max]="max"
+        placeholder="0" /><span>€</span>
+    </div>
+
+
+    <p-datepicker appendTo="overlay" [(ngModel)]="currentTime" inputId="calendar-24h" [showTime]="true"
+      [defaultDate]="currentTime" />
+
+    <p-select [options]="repeats" [(ngModel)]="selectedRepeat" [placeholder]="selectedRepeat" class="w-full md:w-56" />
+    
+    <p-button label="Add" />
+  </div>
+
+</ion-content>
