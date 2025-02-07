@@ -1,17 +1,15 @@
 <div class="list">
-  @if ((details$ | async)?.length != 0){
-    @for (detail of details$ | async; track $index) {
-    <div class="list-item border-solid-light radius-light">
-      <div>
-        <p>{{ detail.transactionDate | date:'dd MMM yyyy HH:mm' }}</p>
-      </div>
-      <div class="flex-row space-between">
-        <p>{{ detail.transaction.name }}</p>
-        <p>{{ detail.amount }}€</p>
-      </div>
+  @for (detail of details$ | async; track $index) {
+  <div class="list-item border-solid-light radius-light">
+    <div>
+      <p>{{ detail.transactionDate | date:'dd MMM yyyy HH:mm' }}</p>
     </div>
-    }
-  } @else {
-    <p>No transaction found.</p>
+    <div class="flex-row space-between">
+      <p>{{ detail.transaction.name }}</p>
+      <p>{{ detail.amount }}€</p>
+    </div>
+  </div>
+  } @empty {
+  <p>No transaction found.</p>
   }
 </div>

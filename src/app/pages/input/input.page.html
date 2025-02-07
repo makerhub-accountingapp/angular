@@ -1,28 +1,45 @@
 <ion-content class="ion-padding">
-  <div class="flex-column height-100 space-between">
-    <p-floatlabel variant="on">
-      <input pSize="large" pInputText id="title" [(ngModel)]="title" autocomplete="off" />
+  <div class="flex-column height-100 width-100 space-between align-center">
+    <p-floatlabel variant="on" class="width-100">
+      <input pSize="large" pInputText id="title" [(ngModel)]="title" autocomplete="off" style="width: 100%; height: 50px;" />
       <label for="on_label">Title</label>
     </p-floatlabel>
 
-    <div>
+    <div class="width-100 flex-row align-center justify-center height: 50px;">
       @if (isPositive) {
-      <p-button icon="pi pi-plus" (onClick)="changePositiveNegative()" />
+      <p-button icon="pi pi-plus" (onClick)="changePositiveNegative()" class="margin-right-light" />
       }
       @else {
-      <p-button icon="pi pi-minus" (onClick)="changePositiveNegative()" />
+      <p-button icon="pi pi-minus" (onClick)="changePositiveNegative()" class="margin-right-light" />
       }
 
-      <p-input-number size="small" [(ngModel)]="amount" inputId="minmax" mode="decimal" [min]="0" [max]="max"
-        placeholder="0" /><span>€</span>
+      <p-input-number [(ngModel)]="amount" inputId="minmax" mode="decimal" [min]="0" [max]="max"
+        placeholder="0" class="width-100 height-50px" />
     </div>
 
+    <p-floatlabel variant="on">
+      <p-datepicker appendTo="body" [(ngModel)]="currentTime" inputId="date" showIcon [showTime]="true" inputId="calendar-24h"
+        iconDisplay="input" [defaultDate]="currentTime" />
+      <label for="date">Date</label>
+    </p-floatlabel>
 
-    <p-datepicker appendTo="overlay" [(ngModel)]="currentTime" inputId="calendar-24h" [showTime]="true"
-      [defaultDate]="currentTime" />
+    <div class="flex-row">
+      <p-select (onChange)="onChangeRepeat()" [options]="repeats" [(ngModel)]="selectedRepeat"
+        [placeholder]="selectedRepeat" class="height-50px width-50" />
 
-    <p-select [options]="repeats" [(ngModel)]="selectedRepeat" [placeholder]="selectedRepeat" class="w-full md:w-56" />
-    
+      <p-datepicker [(ngModel)]="endDate" showIcon inputId="endDate" iconDisplay="input" [showOnFocus]="true"
+        placeholder="Ending date" [disabled]="isOneTime" />
+    </div>
+
+    <p-select [options]="types" optionLabel="name" optionValue="id" [(ngModel)]="selectedType" placeholder="Transaction type" class="width-100 height-50px" />
+
+    <p-select [options]="categories" optionLabel="name" optionValue="id" [(ngModel)]="selectedCategory" placeholder="Category" class="width-100 height-50px" />
+
+    <p-floatlabel variant="on" class="width-100">
+      <textarea pTextarea id="over_label" [(ngModel)]="note" rows="5" cols="30" style="resize: none" class="h-full width-100"></textarea>
+      <label for="on_label">Note</label>
+  </p-floatlabel>
+
     <p-button label="Add" />
   </div>
 
