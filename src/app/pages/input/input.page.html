@@ -1,46 +1,121 @@
 <ion-content class="ion-padding">
-  <form [formGroup]="form" class="flex-column height-100 width-100 space-between align-center">
-    <p-floatlabel variant="on" class="width-100">
-      <input pSize="large" pInputText id="name" [(ngModel)]="name" autocomplete="off" style="width: 100%; height: 50px;" />
-      <label for="on_label">Name</label>
-    </p-floatlabel>
 
-    <div class="width-100 flex-row align-center justify-center height: 50px;">
-      @if (isPositive) {
-      <p-button icon="pi pi-plus" (onClick)="changePositiveNegative()" class="margin-right-light" />
-      }
-      @else {
-      <p-button icon="pi pi-minus" (onClick)="changePositiveNegative()" class="margin-right-light" />
-      }
+  <!----------- Form ---------->
 
-      <p-input-number id="amount" [(ngModel)]="amount" inputId="minmax" mode="decimal" [min]="0" [max]="max"
-        placeholder="0" class="width-100 height-50px" />
+  <form [formGroup]="form" class="
+      flex-column 
+      height-100 
+      width-100 
+      space-between 
+      align-center">
+
+    <!----------- Name ---------->
+
+    <div class="width-100">
+      <p-floatlabel variant="on" class="width-100">
+        <input formControlName="name" pSize="large" pInputText id="name" autocomplete="off"
+          style="width: 100%; height: 50px;" />
+        <label for="on_label">New Transaction</label>
+      </p-floatlabel>
+
+      <!----------- Name Error ---------->
+
+      @if (form.controls['name'].invalid && form.controls['name'].touched) {
+      <p-message severity="error" variant="simple" size="small">Required</p-message>
+      }
     </div>
 
+    <!----------- Amount ---------->
+
+    <div class="width-100">
+      <div class="
+        width-100 
+        flex-row align-center 
+        justify-center 
+        height: 50px;">
+
+        @if (isPositive) {
+        <p-button icon="pi pi-plus" (onClick)="changePositiveNegative()" class="margin-right-light" />
+        }
+        @else {
+        <p-button icon="pi pi-minus" (onClick)="changePositiveNegative()" class="margin-right-light" />
+        }
+        <p-input-number formControlName="amount" id="amount" inputId="minmax" mode="decimal" [min]="0" [max]="max"
+          placeholder="Amount" class="width-100 height-50px" />
+      </div>
+
+      <!----------- Amount Error ---------->
+
+      @if (form.controls['amount'].invalid && form.controls['amount'].touched) {
+      <p-message severity="error" variant="simple" size="small">Required</p-message>
+      }
+    </div>
+
+    <!----------- SetDate ---------->
+
     <p-floatlabel variant="on">
-      <p-datepicker appendTo="body" [(ngModel)]="setDate" inputId="setDate" showIcon [showTime]="true" inputId="calendar-24h"
-        iconDisplay="input" [defaultDate]="setDate" />
+      <p-datepicker formControlName="setDate" appendTo="body" inputId="setDate" showIcon [showTime]="true"
+        inputId="calendar-24h" iconDisplay="input" />
       <label for="date">Date</label>
     </p-floatlabel>
 
-    <div class="flex-row">
-      <p-select (onChange)="onChangeRepeat()" [options]="repetitions" optionLabel="name" [(ngModel)]="repetition"
-        [placeholder]="repetition.name" class="height-50px width-50" />
+    <!----------- Repetition ---------->
 
-      <p-datepicker [(ngModel)]="endDate" showIcon inputId="endDate" iconDisplay="input" [showOnFocus]="true"
-        placeholder="Ending date" [disabled]="isOneTime" />
+    <div class="flex-row">
+      <p-select formControlName="repetition" [options]="repetitions" optionLabel="name" optionValue="id"
+        class="height-50px width-50" />
+
+      <!----------- EndDate ---------->
+
+      <div>
+        <p-datepicker formControlName="endDate" showIcon inputId="endDate" iconDisplay="input" [showOnFocus]="true"
+          placeholder="Ending date" />
+
+        <!----------- EndDate Error ---------->
+
+        @if (form.controls['repetition'].value != 1 && form.controls['endDate'].touched) {
+        <p-message severity="error" variant="simple" size="small">Required</p-message>
+        }
+      </div>
     </div>
 
-    <p-select [options]="types" optionLabel="name" [(ngModel)]="transactionType" placeholder="Transaction type" class="width-100 height-50px" />
+    <!----------- TransactionType ---------->
 
-    <p-select [options]="categories" optionLabel="name" [(ngModel)]="category" placeholder="Select a category" class="width-100 height-50px" />
+    <div class="width-100">
+      <p-select formControlName="transactionTypeId" [options]="types" optionLabel="name" optionValue="id"
+        placeholder="Transaction Type" class="width-100 height-50px" />
+
+      <!----------- TransactionType Error ---------->
+
+      @if (form.controls['transactionTypeId'].invalid && form.controls['transactionTypeId'].touched) {
+      <p-message severity="error" variant="simple" size="small">Required</p-message>
+      }
+    </div>
+
+    <!----------- Category ---------->
+
+    <div class="width-100">
+      <p-select formControlName="categoryId" [options]="categories" optionLabel="name" optionValue="id"
+        placeholder="Category" class="width-100 height-50px" />
+
+      <!----------- Category Error ---------->
+
+      @if (form.controls['categoryId'].invalid && form.controls['categoryId'].touched) {
+      <p-message severity="error" variant="simple" size="small">Required</p-message>
+      }
+    </div>
+
+    <!----------- Note ---------->
 
     <p-floatlabel variant="on" class="width-100">
-      <textarea pTextarea id="over_label" [(ngModel)]="note" rows="5" cols="30" style="resize: none" class="h-full width-100"></textarea>
+      <textarea formControlName="note" pTextarea id="over_label" rows="5" cols="30" style="resize: none"
+        class="h-full width-100"></textarea>
       <label for="on_label">Note</label>
-  </p-floatlabel>
+    </p-floatlabel>
 
-    <p-button label="Add" (onClick)="send()" />
+    <!----------- Add Button ---------->
+
+    <p-button label="Add" (onClick)="send()" [disabled]="!form.valid" />
+
   </form>
-
 </ion-content>
