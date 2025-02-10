@@ -30,6 +30,7 @@ import { BaseComponent } from 'src/app/shared/templates/components/base/base.com
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CategoryService } from 'src/app/features/services/category.service';
 import { MessageModule } from 'primeng/message'
+import { DetailTransactionCreateForm } from 'src/app/core/models/detail.model';
 
 export interface Repetition {
   id: number;
@@ -81,7 +82,7 @@ export class InputPage implements OnInit {
           [],
         ],
         repetition: [1, [Validators.required], []],
-        setDate: [new Date(), [Validators.required], []],
+        transactionDate: [new Date(), [Validators.required], []],
         endDate: [null],
         transactionTypeId: [
           undefined,
@@ -146,19 +147,36 @@ export class InputPage implements OnInit {
   send() {
     this.form.markAllAsTouched();
 
-    if (this.form.valid) {
+    if (this.form.invalid) {
+      console.log('invalid form')
+    } else {
       //TODO service.Create()
       //TODO Amount needs to be controled with +/-
-    } else {
-      console.log('invalid form')
+
+      let amount: number = this.form.controls['amount'].value;
+      if (!this.isPositive) amount *= -1
+
+      let dtForm: DetailTransactionCreateForm = {
+        name: this.form.controls['name'].value,
+        amount: amount,
+        repetition: this.form.controls['repetition'].value,
+        transactionDate: this.form.controls['transactionDate'].value,
+        endDate: this.form.controls['transactionDate'].value,
+        transactionTypeId: this.form.controls['transactionTyopeId'].value,
+        categoryId: this.form.controls['categoryId'].value,
+        note: this.form.controls['note'].value,
+        accountId: this.form.controls['accountId'].value,
+      }
     }
+
+
     console.log(this.form.valid);
     console.log(this.form.controls['name'].valid);
     console.log(this.form.controls['name'].value);
     console.log(this.form.controls['amount'].valid);
     console.log(this.form.controls['amount'].value);
-    console.log(this.form.controls['setDate'].valid);
-    console.log(this.form.controls['setDate'].value);
+    console.log(this.form.controls['transactionDate'].valid);
+    console.log(this.form.controls['transactionDate'].value);
     console.log(this.form.controls['repetition'].valid);
     console.log(this.form.controls['repetition'].value);
     console.log(this.form.controls['endDate'].valid);
@@ -177,7 +195,7 @@ export class InputPage implements OnInit {
 //TODO todo list for HTML
 //TODO Change size of +/- icon
 //TODO Change Error message position for Amount
-//TODO Change SetDate and EndDate size
+//TODO Change transactionDate and EndDate size
 
 // this.form = this.fb.group({
 //   name: [

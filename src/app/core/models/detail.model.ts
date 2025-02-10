@@ -15,6 +15,18 @@ export interface Detail {
 	transactionType: TransactionType
 }
 
+export interface DetailTransactionCreateForm {
+	name: string,
+	amount: number,
+	repetition: number,
+	transactionDate: Date,
+	endDate?: Date,
+	transactionTypeId: number
+	categoryId: number,
+	note: string,
+	accountId: number
+}
+
 export interface DetailGetForm {
 	name?: string,
 	categoryId?: number,

@@ -14,7 +14,7 @@
     <div class="width-100">
       <p-floatlabel variant="on" class="width-100">
         <input formControlName="name" pSize="large" pInputText id="name" autocomplete="off"
-          style="width: 100%; height: 50px;" />
+          style="width: 100%; height: 44px;" />
         <label for="on_label">New Transaction</label>
       </p-floatlabel>
 
@@ -27,43 +27,45 @@
 
     <!----------- Amount ---------->
 
-    <div class="width-100">
+    <div class=" width-100 flex-row justify-start align-start">
       <div class="
-        width-100 
         flex-row align-center 
-        justify-center 
-        height: 50px;">
+        justify-center">
 
         @if (isPositive) {
-        <p-button icon="pi pi-plus" (onClick)="changePositiveNegative()" class="margin-right-light" />
+        <p-button icon="pi pi-plus" (onClick)="changePositiveNegative()" class="margin-right-light"  />
         }
         @else {
-        <p-button icon="pi pi-minus" (onClick)="changePositiveNegative()" class="margin-right-light" />
+        <p-button icon="pi pi-minus" (onClick)="changePositiveNegative()" class="margin-right-light padding-top-3" />
         }
-        <p-input-number formControlName="amount" id="amount" inputId="minmax" mode="decimal" [min]="0" [max]="max"
-          placeholder="Amount" class="width-100 height-50px" />
       </div>
+<div class="flex-column width-100">
+      <p-input-number formControlName="amount" id="amount" inputId="minmax" mode="decimal" [min]="0" [max]="max"
+        placeholder="Amount" class="width-100 height-44px" />
 
       <!----------- Amount Error ---------->
 
       @if (form.controls['amount'].invalid && form.controls['amount'].touched) {
       <p-message severity="error" variant="simple" size="small">Required</p-message>
       }
+      </div>
     </div>
 
-    <!----------- SetDate ---------->
+    <!----------- transactionDate ---------->
 
-    <p-floatlabel variant="on">
-      <p-datepicker formControlName="setDate" appendTo="body" inputId="setDate" showIcon [showTime]="true"
-        inputId="calendar-24h" iconDisplay="input" />
-      <label for="date">Date</label>
-    </p-floatlabel>
+    <div class="width-100 flex-row justify-end">
+      <p-floatlabel variant="on">
+        <p-datepicker  [style]="{'width':'100%'}"  class="test" formControlName="transactionDate" appendTo="body" inputId="transactionDate" showIcon
+          [showTime]="true" inputId="calendar-24h" iconDisplay="input" />
+        <label for="date">Date</label>
+      </p-floatlabel>
+    </div>
 
     <!----------- Repetition ---------->
 
-    <div class="flex-row">
+    <div class="flex-row align-center">
       <p-select formControlName="repetition" [options]="repetitions" optionLabel="name" optionValue="id"
-        class="height-50px width-50" />
+        class="height-44px width-50" />
 
       <!----------- EndDate ---------->
 
@@ -83,7 +85,7 @@
 
     <div class="width-100">
       <p-select formControlName="transactionTypeId" [options]="types" optionLabel="name" optionValue="id"
-        placeholder="Transaction Type" class="width-100 height-50px" />
+        placeholder="Transaction Type" class="width-100 height-44px" />
 
       <!----------- TransactionType Error ---------->
 
@@ -96,7 +98,7 @@
 
     <div class="width-100">
       <p-select formControlName="categoryId" [options]="categories" optionLabel="name" optionValue="id"
-        placeholder="Category" class="width-100 height-50px" />
+        placeholder="Category" class="width-100 height-44px" />
 
       <!----------- Category Error ---------->
 
@@ -115,7 +117,7 @@
 
     <!----------- Add Button ---------->
 
-    <p-button label="Add" (onClick)="send()" [disabled]="!form.valid" />
+    <p-button label="Add" (onClick)="send()" [disabled]="form.invalid" />
 
   </form>
 </ion-content>
