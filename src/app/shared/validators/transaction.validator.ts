@@ -11,9 +11,10 @@ export class TransactionValidator {
 
   static endDateRequiredValidator(control: AbstractControl): ValidationErrors | null {
     const repetition = control.get('repetition')?.value;
-    const endDate = control.get('endDate')?.value;
+    const endDate = control.get('endDate');
 
     if (repetition == 1) return null;
-    else return {endDateRequired: true };
+    if (!endDate || !endDate.value) return { endDateRequired: true };
+    return null;
   }
 }

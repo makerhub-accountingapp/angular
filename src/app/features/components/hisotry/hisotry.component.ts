@@ -13,15 +13,13 @@ import dayjs from 'dayjs';
   styleUrls: ['./hisotry.component.scss'],
   imports: [ IonList, IonItem, IonLabel, IonAvatar, DatePipe, AsyncPipe ] 
 })
-export class HisotryComponent extends BaseComponent<Detail, DetailCreateForm, DetailUpdateForm, DetailService> implements OnInit, OnChanges {
+export class HisotryComponent implements OnInit, OnChanges {
 
   details$: Observable<Detail[]> = new BehaviorSubject<Detail[]>([]);
   
   @Input() selectedDate!: Date;
 
-  constructor(service: DetailService) {
-    super();
-    this.setServie(service);
+  constructor(private service: DetailService) {
   }
 
   ngOnInit(): void {

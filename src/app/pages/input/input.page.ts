@@ -30,7 +30,10 @@ import { BaseComponent } from 'src/app/shared/templates/components/base/base.com
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CategoryService } from 'src/app/features/services/category.service';
 import { MessageModule } from 'primeng/message'
-import { DetailTransactionCreateForm } from 'src/app/core/models/detail.model';
+import { Detail, DetailTransactionCreateForm } from 'src/app/core/models/detail.model';
+import { DetailService } from 'src/app/features/services/detail.service';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 export interface Repetition {
   id: number;
@@ -55,7 +58,8 @@ export interface Repetition {
     SelectModule,
     TextareaModule,
     ReactiveFormsModule,
-    MessageModule
+    MessageModule,
+    ToastModule
   ],
 })
 export class InputPage implements OnInit {
@@ -64,10 +68,10 @@ export class InputPage implements OnInit {
   repetitions!: Repetition[];
   types!: TransactionType[];
   categories!: Category[];
-
+  createdEntity?: Detail;
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder, private serviceTT: TransactionTypeService, private serviceC: CategoryService) { }
+  constructor(private fb: FormBuilder, private serviceTT: TransactionTypeService, private serviceC: CategoryService, private serviceD: DetailService, private ServiceM: MessageService) { }
 
   ngOnInit() {
 
@@ -108,7 +112,7 @@ export class InputPage implements OnInit {
     // get otions
     this.getTypes();
     this.getCategories();
-    
+
     this.repetitions = [
       { id: 1, name: 'No Repeat' },
       { id: 2, name: 'Daily' },
@@ -116,6 +120,8 @@ export class InputPage implements OnInit {
       { id: 4, name: 'Monthly' },
       { id: 5, name: 'Yearly' },
     ];
+
+    setTimeout(() => console.log(this.form.errors), 20000)
   }
 
   /********** Methods **********/
@@ -144,14 +150,12 @@ export class InputPage implements OnInit {
     });
   }
 
-  send() {
+  send(): void {
     this.form.markAllAsTouched();
 
     if (this.form.invalid) {
       console.log('invalid form')
     } else {
-      //TODO service.Create()
-      //TODO Amount needs to be controled with +/-
 
       let amount: number = this.form.controls['amount'].value;
       if (!this.isPositive) amount *= -1
@@ -160,13 +164,35 @@ export class InputPage implements OnInit {
         name: this.form.controls['name'].value,
         amount: amount,
         repetition: this.form.controls['repetition'].value,
-        transactionDate: this.form.controls['transactionDate'].value,
-        endDate: this.form.controls['transactionDate'].value,
-        transactionTypeId: this.form.controls['transactionTyopeId'].value,
+        transactionDate: this.form.controls['transactionDate'].value.toISOString().split('.')[0],
+        endDate: this.form.controls['transactionDate'].value.toISOString().split('.')[0],
+        transactionTypeId: this.form.controls['transactionTypeId'].value,
         categoryId: this.form.controls['categoryId'].value,
         note: this.form.controls['note'].value,
-        accountId: this.form.controls['accountId'].value,
+        accountId: 1,
       }
+
+      console.log(dtForm);
+
+      this.serviceD.create(dtForm).subscribe(data => {
+        this.createdEntity = data;
+
+        if (this.createdEntity == null) {
+          this.ServiceM.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error occured during the procedure.'
+          })
+        } else {
+          this.ServiceM.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Successfully registered.'
+          })
+
+          console.log(this.createdEntity);
+        }
+      });
     }
 
 
@@ -192,11 +218,6 @@ export class InputPage implements OnInit {
 
 /********** Note **********/
 
-//TODO todo list for HTML
-//TODO Change size of +/- icon
-//TODO Change Error message position for Amount
-//TODO Change transactionDate and EndDate size
-
 // this.form = this.fb.group({
 //   name: [
 //     '', // Default value
@@ -204,3 +225,8 @@ export class InputPage implements OnInit {
 //     [] // Async validations
 //   ]
 // });
+
+// To change css of primeNG element, try :
+// class=""
+// style=""
+// [style]="{'attribute': 'value' }"
