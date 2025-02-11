@@ -1,4 +1,6 @@
-<p-table [value]="details" stripedRows scrollable="true" [scrollHeight]="height" >
+<p class="text-center bold margin-bottom-medium">Total : {{total}}</p>
+<div class="height-custom border-custom">
+<p-table [value]="details" stripedRows scrollable="true" [scrollHeight]="height">
     <ng-template #header>
     </ng-template>
     <ng-template #body let-detail>
@@ -9,3 +11,4 @@
         </tr>
     </ng-template>
 </p-table>
+</div>

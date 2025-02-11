@@ -1,62 +1,67 @@
 @if(transaction && tableHeight){
 <ion-content class="ion-padding" [fullscreen]="true">
 
-  <!-- <p-button (click)="GoToHistory()" class="text-150">&#60; Back</p-button> -->
   <div class="width-100 height-100 flex-column space-between">
 
-    <p class="text-150 text-center margin-custom">{{transaction.name}}</p>
+    <p class="text-150 text-center">{{transaction.name}}</p>
 
 
     <form [formGroup]="form" class="
       flex-column 
       width-100 
-      align-end">
+      space-between
+      align-end
+      height-20
+      padding-tp-custom">
 
       <!----------- SetDate ---------->
 
-        <div class="width-100 flex-row justify-end">
-          <p-floatlabel variant="on" class="width-100">
-            <p-datepicker [style]="{'width':'100%'}" formControlName="setDate" appendTo="body" inputId="setDate"
-              showIcon [showTime]="true" inputId="calendar-24h" iconDisplay="input" />
-            <label for="date">Set Date</label>
-          </p-floatlabel>
-        </div>
+      <div class="width-100 flex-row justify-end align-end">
+        <p-floatlabel variant="on" class="width-100 ">
+          <p-datepicker [style]="{'width':'100%'}" formControlName="setDate" appendTo="body" inputId="setDate" showIcon
+            [showTime]="true" inputId="calendar-24h" iconDisplay="input" />
+          <label for="date">Set Date</label>
+        </p-floatlabel>
 
         <!----------- Repetition ---------->
 
-        <div class="flex-row align-start width-100">
-          <p-select formControlName="repetition" [options]="repetitions" optionLabel="name" optionValue="id"
-            class="height-44px width-50 margin-top" />
+        <p-select formControlName="repetition" [options]="repetitions" optionLabel="name" optionValue="id"
+          class="height-44px width-50 margin-top" />
+      </div>
 
-          <!----------- EndDate ---------->
+      <div class="flex-row align-start width-100">
 
-          <div class="width-100">
-            <p-floatlabel variant="on" class="width-100">
-              <p-datepicker [style]="{'width':'100%'}" formControlName="endDate" appendTo="body" inputId="endDate"
-                showIcon iconDisplay="input" />
-              <label for="endDate">Ending Date</label>
-            </p-floatlabel>
+        <!----------- EndDate ---------->
 
-            <!----------- EndDate Error ---------->
+        <div class="width-100 flex-row">
+          <p-floatlabel variant="on" class="width-100">
+            <p-datepicker [style]="{'width':'100%'}" formControlName="endDate" appendTo="body" inputId="endDate"
+              showIcon iconDisplay="input" />
+            <label for="endDate">Ending Date</label>
+          </p-floatlabel>
 
-            @if (form.controls['repetition'].value != 1 && form.controls['endDate'].touched &&
-            !form.controls['endDate'].value) {
-            <p-message severity="error" variant="simple" size="small">Required</p-message>
-            }
-          </div>
+          <!----------- EndDate Error ---------->
+
+          @if (form.controls['repetition'].value != 1 && form.controls['endDate'].touched &&
+          !form.controls['endDate'].value) {
+          <p-message severity="error" variant="simple" size="small">Required</p-message>
+          }
+
+          @if (form.controls['repetition'].value != 1){
+          @if (!isEditing) {
+          <p-button (onClick)="change()"
+            [style]="{'height': '44px', 'width': '100px', 'margin-left': '8px'}">Change</p-button>
+          }
+          @else {
+          <p-button (onClick)="send()"
+            [style]="{'height': '44px', 'width': '100px', 'margin-left': '8px'}">Save</p-button>
+          }
+          }
         </div>
-
-        @if (!isEditing) {
-        <p-button (onClick)="change()">Change</p-button>
-        }
-        @else {
-        <p-button (onClick)="send()">Send</p-button>
-        }
+      </div>
     </form>
 
-    <div style="margin-top: 20px; height: 60%;">
-      <app-table [transactionId]="intId" [height]="tableHeight"></app-table>
-    </div>
+    <app-table class="height-custom" [transactionId]="intId" [height]="tableHeight"></app-table>
 
   </div>
 </ion-content>
