@@ -34,11 +34,7 @@ import { Detail, DetailTransactionCreateForm } from 'src/app/core/models/detail.
 import { DetailService } from 'src/app/features/services/detail.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-
-export interface Repetition {
-  id: number;
-  name: string;
-}
+import { Repetition } from 'src/app/core/models/repetition.model';
 
 @Component({
   selector: 'app-input',
@@ -77,29 +73,28 @@ export class InputPage implements OnInit {
 
     /********** FormGroup setting **********/
 
-    this.form = this.fb.group(
-      {
-        name: ['', [Validators.required, Validators.minLength(1)], []],
-        amount: [
-          null,
-          [Validators.required, Validators.min(0), Validators.max(this.max)],
-          [],
-        ],
-        repetition: [1, [Validators.required], []],
-        transactionDate: [new Date(), [Validators.required], []],
-        endDate: [null],
-        transactionTypeId: [
-          undefined,
-          [Validators.required, TransactionValidator.optionValid],
-          [],
-        ],
-        categoryId: [
-          undefined,
-          [Validators.required, TransactionValidator.optionValid],
-          [],
-        ],
-        note: ['', [], []],
-      },
+    this.form = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(1)], []],
+      amount: [
+        null,
+        [Validators.required, Validators.min(0), Validators.max(this.max)],
+        [],
+      ],
+      repetition: [1, [Validators.required], []],
+      transactionDate: [new Date(), [Validators.required], []],
+      endDate: [null],
+      transactionTypeId: [
+        undefined,
+        [Validators.required, TransactionValidator.optionValid],
+        [],
+      ],
+      categoryId: [
+        undefined,
+        [Validators.required, TransactionValidator.optionValid],
+        [],
+      ],
+      note: ['', [], []],
+    },
       { validators: TransactionValidator.endDateRequiredValidator }
     );
 
@@ -165,7 +160,9 @@ export class InputPage implements OnInit {
         amount: amount,
         repetition: this.form.controls['repetition'].value,
         transactionDate: this.form.controls['transactionDate'].value.toISOString().split('.')[0],
+
         //TODO Add verification to endDate (endDate > transactionDate)
+        
         endDate: this.form.controls['endDate'].value.toISOString().split('.')[0],
         transactionTypeId: this.form.controls['transactionTypeId'].value,
         categoryId: this.form.controls['categoryId'].value,

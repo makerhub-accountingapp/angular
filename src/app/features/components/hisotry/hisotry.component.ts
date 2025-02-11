@@ -37,10 +37,10 @@ export class HisotryComponent implements OnInit, OnChanges {
     const startDate = dayjs(this.selectedDate).startOf('month').toDate();
     const endDate = dayjs(this.selectedDate).endOf('month').toDate();
 
-    this.details$ = this.service.get(undefined, undefined, undefined, undefined, startDate, endDate);
+    this.details$ = this.service.get(undefined, undefined, undefined, undefined, undefined, startDate, endDate);
   }
 
-  goToDetail(id: number) {
-    this.router.navigate(['/detail', id])
+  goToTransaction(id: number) {
+    this.router.navigate(['/transaction', id]);
   }
 }
