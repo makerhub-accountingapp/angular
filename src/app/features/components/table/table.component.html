@@ -5,7 +5,7 @@
     </ng-template>
     <ng-template #body let-detail>
         <tr>
-            <td>{{detail.transactionDate | date:'dd MMM HH:MM' }}</td>
+            <td>{{detail.transactionDate | date:'dd/mm/yy HH:MM' }}</td>
             <td>{{detail.amount}}</td>
             <td>{{detail.category.name}}</td>
         </tr>
