@@ -165,14 +165,13 @@ export class InputPage implements OnInit {
         amount: amount,
         repetition: this.form.controls['repetition'].value,
         transactionDate: this.form.controls['transactionDate'].value.toISOString().split('.')[0],
-        endDate: this.form.controls['transactionDate'].value.toISOString().split('.')[0],
+        //TODO Add verification to endDate (endDate > transactionDate)
+        endDate: this.form.controls['endDate'].value.toISOString().split('.')[0],
         transactionTypeId: this.form.controls['transactionTypeId'].value,
         categoryId: this.form.controls['categoryId'].value,
         note: this.form.controls['note'].value,
         accountId: 1,
       }
-
-      console.log(dtForm);
 
       this.serviceD.create(dtForm).subscribe(data => {
         this.createdEntity = data;
@@ -194,25 +193,6 @@ export class InputPage implements OnInit {
         }
       });
     }
-
-
-    console.log(this.form.valid);
-    console.log(this.form.controls['name'].valid);
-    console.log(this.form.controls['name'].value);
-    console.log(this.form.controls['amount'].valid);
-    console.log(this.form.controls['amount'].value);
-    console.log(this.form.controls['transactionDate'].valid);
-    console.log(this.form.controls['transactionDate'].value);
-    console.log(this.form.controls['repetition'].valid);
-    console.log(this.form.controls['repetition'].value);
-    console.log(this.form.controls['endDate'].valid);
-    console.log(this.form.controls['endDate'].value);
-    console.log(this.form.controls['transactionTypeId'].valid);
-    console.log(this.form.controls['transactionTypeId'].value);
-    console.log(this.form.controls['categoryId'].valid);
-    console.log(this.form.controls['categoryId'].value);
-    console.log(this.form.controls['note'].valid);
-    console.log(this.form.controls['note'].value);
   }
 }
 
