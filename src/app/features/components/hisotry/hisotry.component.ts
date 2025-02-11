@@ -6,6 +6,7 @@ import { DetailService } from '../../services/detail.service';
 import { DatePipe, AsyncPipe } from '@angular/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 import dayjs from 'dayjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hisotry',
@@ -19,7 +20,7 @@ export class HisotryComponent implements OnInit, OnChanges {
   
   @Input() selectedDate!: Date;
 
-  constructor(private service: DetailService) {
+  constructor(private service: DetailService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -37,5 +38,9 @@ export class HisotryComponent implements OnInit, OnChanges {
     const endDate = dayjs(this.selectedDate).endOf('month').toDate();
 
     this.details$ = this.service.get(undefined, undefined, undefined, undefined, startDate, endDate);
+  }
+
+  goToDetail(id: number) {
+    this.router.navigate(['/detail', id])
   }
 }

@@ -1,6 +1,6 @@
 <div class="list">
   @for (detail of details$ | async; track $index) {
-  <div class="list-item border-solid-light radius-light">
+  <div class="list-item border-solid-light radius-light" (click)="goToDetail(detail.id)">
     <div>
       <p>{{ detail.transactionDate | date:'dd MMM yyyy HH:mm' }}</p>
     </div>
