@@ -35,4 +35,10 @@ export class TableComponent  implements OnInit {
       console.log(this.details);
     });
   }
+
+  //TODO Create showDialog
+  // showDialog(detail: Detail): void {
+  //   this.selectedDetail = detail;
+  //   this.visible = true;
+  // }
 }
