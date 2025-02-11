@@ -1,4 +1,129 @@
-<ion-content>
-  <p>transactionInput works !</p>
-  </ion-content>
-  
+<ion-content class="ion-padding">
+
+  <!----------- Form ---------->
+
+  <form [formGroup]="form" class="
+      flex-column 
+      height-100 
+      width-100 
+      space-between 
+      align-center">
+
+    <!----------- Name ---------->
+
+    <div class="width-100">
+      <p-floatlabel variant="on" class="width-100">
+        <input formControlName="name" pSize="large" pInputText id="name" autocomplete="off"
+          style="width: 100%; height: 44px;" />
+        <label for="on_label">New Transaction</label>
+      </p-floatlabel>
+
+      <!----------- Name Error ---------->
+
+      @if (form.controls['name'].invalid && form.controls['name'].touched) {
+      <p-message severity="error" variant="simple" size="small">Required</p-message>
+      }
+    </div>
+
+    <!----------- Amount ---------->
+
+    <div class=" width-100 flex-row justify-start align-start">
+      <div class="
+        flex-row align-center 
+        justify-center">
+
+        @if (isPositive) {
+        <p-button icon="pi pi-plus" (onClick)="changePositiveNegative()" class="margin-right-light"  />
+        }
+        @else {
+        <p-button icon="pi pi-minus" (onClick)="changePositiveNegative()" class="margin-right-light padding-top-3" />
+        }
+      </div>
+<div class="flex-column width-100">
+      <p-input-number formControlName="amount" id="amount" inputId="minmax" mode="decimal" [min]="0" [max]="max"
+        placeholder="Amount" class="width-100 height-44px" />
+
+      <!----------- Amount Error ---------->
+
+      @if (form.controls['amount'].invalid && form.controls['amount'].touched) {
+      <p-message severity="error" variant="simple" size="small">Required</p-message>
+      }
+      </div>
+    </div>
+
+    <!----------- transactionDate ---------->
+
+    <div class="width-100 flex-row justify-end">
+      <p-floatlabel variant="on">
+        <p-datepicker  [style]="{'width':'100%'}" formControlName="transactionDate" appendTo="body" inputId="transactionDate" showIcon
+          [showTime]="true" inputId="calendar-24h" iconDisplay="input" />
+        <label for="date">Date</label>
+      </p-floatlabel>
+    </div>
+
+    <!----------- Repetition ---------->
+
+    <div class="flex-row align-start">
+      <p-select formControlName="repetition" [options]="repetitions" optionLabel="name" optionValue="id"
+        class="height-44px width-50 margin-top" />
+
+      <!----------- EndDate ---------->
+
+      <div>
+        <p-floatlabel variant="on">
+          <p-datepicker  [style]="{'width':'100%'}" formControlName="endDate" appendTo="body" inputId="endDate" showIcon iconDisplay="input" />
+          <label for="endDate">Ending Date</label>
+        </p-floatlabel>
+
+        <!-- <p-datepicker appendTo="body" formControlName="endDate" showIcon inputId="endDate" iconDisplay="input" [showOnFocus]="true"
+          placeholder="Ending date" /> -->
+
+        <!----------- EndDate Error ---------->
+
+        @if (form.controls['repetition'].value != 1 && form.controls['endDate'].touched && !form.controls['endDate'].value) {
+        <p-message severity="error" variant="simple" size="small">Required</p-message>
+        }
+      </div>
+    </div>
+
+    <!----------- TransactionType ---------->
+
+    <div class="width-100">
+      <p-select formControlName="transactionTypeId" [options]="types" optionLabel="name" optionValue="id"
+        placeholder="Transaction Type" class="width-100 height-44px" />
+
+      <!----------- TransactionType Error ---------->
+
+      @if (form.controls['transactionTypeId'].invalid && form.controls['transactionTypeId'].touched) {
+      <p-message severity="error" variant="simple" size="small">Required</p-message>
+      }
+    </div>
+
+    <!----------- Category ---------->
+
+    <div class="width-100">
+      <p-select formControlName="categoryId" [options]="categories" optionLabel="name" optionValue="id"
+        placeholder="Category" class="width-100 height-44px" />
+
+      <!----------- Category Error ---------->
+
+      @if (form.controls['categoryId'].invalid && form.controls['categoryId'].touched) {
+      <p-message severity="error" variant="simple" size="small">Required</p-message>
+      }
+    </div>
+
+    <!----------- Note ---------->
+
+    <p-floatlabel variant="on" class="width-100">
+      <textarea formControlName="note" pTextarea id="over_label" rows="5" cols="30" style="resize: none"
+        class="h-full width-100"></textarea>
+      <label for="on_label">Note</label>
+    </p-floatlabel>
+
+    <!----------- Add Button ---------->
+
+    <p-toast></p-toast>
+    <p-button label="Add" (onClick)="send()" [disabled]="form.invalid" />
+
+  </form>
+</ion-content>

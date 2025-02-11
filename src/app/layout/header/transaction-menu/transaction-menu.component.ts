@@ -11,6 +11,7 @@ import { IonContent, IonHeader, IonMenu, IonTitle, IonToolbar, IonList, IonMenuT
 export class TransactionMenuComponent  implements OnInit {
 
   pages = [
+    { title: 'Add new transaction', url: '/input', icon: 'http://www.w3.org/2000/svg'},
     { title: 'View history and statistics', url: '/report', icon: 'http://www.w3.org/2000/svg' },
   ]
 

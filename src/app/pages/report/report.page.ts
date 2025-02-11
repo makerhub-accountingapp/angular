@@ -32,6 +32,8 @@ export class ReportPage extends BaseComponent<TransactionType, TransactionTypeCr
   }
 
   ngOnInit() { 
+    //TODO Add All
+    //TODO Change the history depending on the transaction type
     this.transactionTypes$ = this.get();
   }
 

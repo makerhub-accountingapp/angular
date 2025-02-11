@@ -36,6 +36,8 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
 
+@import "primeicons/primeicons.css";
+
 p {
   margin: 0;
 }
@@ -76,12 +78,24 @@ div {
   flex-direction: column;
 }
 
+.align-start {
+  align-items: start;
+}
+
 .align-center {
   align-items: center;
 }
 
+.justify-start {
+  justify-content: start;
+}
+
 .justify-center {
-  justify-items: center;
+  justify-content: center;
+}
+
+.justify-end {
+	justify-content: end;
 }
 
 .space-between {
@@ -96,14 +110,6 @@ div {
   justify-content: flex-end;
 }
 
-.width-100 {
-  width: 100%;
-}
-
-.height-100 {
-  height: 100%;
-}
-
 .text-center {
   text-justify: center;
   text-align: center;
@@ -111,10 +117,6 @@ div {
 
 .text-end {
   text-align: end;
-}
-
-.width-50 {
-  width: 50%;
 }
 
 .padding-light {
@@ -141,13 +143,38 @@ div {
   font-weight: bolder;
 }
 
+.height-100 {
+  height: 100%;
+}
+
+.height-50px {
+  height: 50px;
+}
+
+.width-50 {
+  width: 50%;
+}
+
+.width-80 {
+  width: 80%;
+}
+
+.width-100 {
+  width: 100%;
+}
+
 .width-150px {
   width: 150px;
 }
 
-.margin-wide {
+.margin-tb-wide {
   margin-top: 30px;
   margin-bottom: 30px;
+}
+
+.margin-lr-light {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .margin-top-wide {
@@ -156,6 +183,10 @@ div {
 
 .margin-bottom-wide {
   margin-bottom: 30px;
+}
+
+.margin-right-light {
+  margin-right: 10px;
 }
 
 .icon {

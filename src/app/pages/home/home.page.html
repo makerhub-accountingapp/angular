@@ -2,11 +2,11 @@
   <div class="height-100 flex-column align-center space-around">
     <div>
       <div>
-        <p class="text-center text-250 bolder margin-wide">Available : {{ available }}€</p>
+        <p class="text-center text-250 bolder margin-tb-wide">Available : {{ available }}€</p>
       </div>
       @if (!isEditing) {
         <div>
-          <p class="text-center text-150 bold margin-wide" (click)="changeIsEditing()">Current balance : {{ balance }}€</p>
+          <p class="text-center text-150 bold margin-tb-wide" (click)="changeIsEditing()">Current balance : {{ balance }}€</p>
         </div>
       } @else {
         <div class="flex-row space-between">
@@ -16,7 +16,7 @@
       }
     </div>
     <app-chart></app-chart>
-    <div class="width-100 flex-row align-center margin-wide space-around">
+    <div class="width-100 flex-row align-center margin-tb-wide space-around">
       <p class="text-center text-150 bold">Add new transaction</p>
       <img src="../../../assets/icon/plus.png" class="icon" (click)="redirectToInput()">
     </div>
