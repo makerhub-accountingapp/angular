@@ -1,3 +1,4 @@
+@if(transaction && tableHeight){
 <ion-content class="ion-padding" [fullscreen]="true">
 
   <!-- <p-button (click)="GoToHistory()" class="text-150">&#60; Back</p-button> -->
@@ -12,6 +13,7 @@
       align-end">
 
       <!----------- SetDate ---------->
+
         <div class="width-100 flex-row justify-end">
           <p-floatlabel variant="on" class="width-100">
             <p-datepicker [style]="{'width':'100%'}" formControlName="setDate" appendTo="body" inputId="setDate"
@@ -52,9 +54,10 @@
         }
     </form>
 
-    <div style="margin-top: 20px;">
-      <app-hisotry></app-hisotry>
+    <div style="margin-top: 20px; height: 60%;">
+      <app-table [transactionId]="intId" [height]="tableHeight"></app-table>
     </div>
 
   </div>
 </ion-content>
+}

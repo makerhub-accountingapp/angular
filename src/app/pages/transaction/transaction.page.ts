@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,6 +21,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 import { HisotryComponent } from "../../features/components/hisotry/hisotry.component";
+import { TableComponent } from "../../features/components/table/table.component";
 
 @Component({
   selector: 'app-transaction',
@@ -40,25 +41,38 @@ import { HisotryComponent } from "../../features/components/hisotry/hisotry.comp
     TextareaModule,
     ReactiveFormsModule,
     MessageModule,
-    ToastModule, 
-    HisotryComponent]
+    ToastModule,
+    HisotryComponent,
+    TableComponent,]
 })
 export class TransactionPage implements OnInit {
 
   id: string | null = null;
+  intId!: number;
   transaction!: Transaction;
   details!: Detail[];
   repetitions!: Repetition[];
   isEditing: boolean = false;
+  tableHeight!: string;
 
   form!: FormGroup;
 
   constructor(private route: ActivatedRoute, private router: Router, private tService: TransactionService, private dService: DetailService, private fb: FormBuilder, private serviceM: MessageService) {
     this.route.paramMap.subscribe(params => this.id = params.get('id'))
+
+    this.form = this.fb.group({
+      repetition: ['', [Validators.required], []],
+      setDate: ['', [Validators.required], []],
+      endDate: ['', [], []],
+    },
+      { validators: TransactionValidator.endDateRequiredValidator }
+    );
   }
 
   ngOnInit() {
     /********** Default setups **********/
+
+    if (this.id) this.intId = parseInt(this.id)
 
     // Sets up repetitions
     this.repetitions = [
@@ -71,20 +85,22 @@ export class TransactionPage implements OnInit {
 
     // Gets transaction
     if (this.id) this.tService.getById(parseInt(this.id)).subscribe(data => {
-      this.transaction = data;
+      this.transaction = {
+        ...data,
+        setDate: new Date(data.setDate),
+        endDate: data.endDate ? new Date(data.endDate) : null
+      };
       console.log(data);
       console.log(this.transaction);
 
       const repetition = this.repetitions[data.repetition].name;
 
-      this.form = this.fb.group({
-        repetition: [repetition, [Validators.required], []],
-        setDate: [data.setDate, [Validators.required], []],
-        endDate: [data.setDate, [], []],
-      },
-        { validators: TransactionValidator.endDateRequiredValidator }
-      );
-  
+      this.form.patchValue({
+        repetition: data.repetition,
+        setDate: this.transaction.setDate,
+        endDate: this.transaction.endDate
+      })
+
       this.form.get('repetition')?.disable();
       this.form.get('setDate')?.disable();
       this.form.get('endDate')?.disable();
@@ -98,6 +114,12 @@ export class TransactionPage implements OnInit {
 
 
     this.onChangeRepeat();
+    this.updateTableHeight();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.updateTableHeight();
   }
 
   GoToHistory(): void {
@@ -106,9 +128,10 @@ export class TransactionPage implements OnInit {
 
   change(): void {
     this.isEditing = true;
-    this.form.get('repetition')?.enable();
-    this.form.get('setDate')?.enable();
-    this.form.get('endDate')?.enable();
+    
+    if (this.form.get('repetition')?.value != 1) {
+      this.form.get('endDate')?.enable(); 
+    }
   }
 
   onChangeRepeat() {
@@ -128,6 +151,11 @@ export class TransactionPage implements OnInit {
     this.form.get('repetition')?.disable();
     this.form.get('setDate')?.disable();
     this.form.get('endDate')?.disable();
+  }
+
+  updateTableHeight(): void {
+    const windowHeight = window.innerHeight;
+    this.tableHeight = `${windowHeight * 0.55}px`;
   }
 
   // initForm(): void {

@@ -1,0 +1,11 @@
+<p-table [value]="details" stripedRows scrollable="true" [scrollHeight]="height" >
+    <ng-template #header>
+    </ng-template>
+    <ng-template #body let-detail>
+        <tr>
+            <td>{{detail.transactionDate | date:'dd MMM HH:MM' }}</td>
+            <td>{{detail.amount}}</td>
+            <td>{{detail.category.name}}</td>
+        </tr>
+    </ng-template>
+</p-table>
