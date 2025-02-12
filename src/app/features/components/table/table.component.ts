@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { DetailService } from '../../services/detail.service';
-import { Detail } from 'src/app/core/models/detail.model';
+import { Detail, DetailUpdateForm } from 'src/app/core/models/detail.model';
 import { ButtonModule } from 'primeng/button';
 import { DatePipe } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
@@ -33,6 +33,8 @@ export class TableComponent  implements OnInit {
   types!: TransactionType[];
   categories!: Category[];
   isEditing: boolean = false;
+  deleteCount: number = 0;
+  screenSize!: number;
 
   constructor(private serviceD: DetailService, private serviceTT: TransactionTypeService, private serviceC: CategoryService, private fb: FormBuilder) { 
     this.form = this.fb.group({
@@ -50,6 +52,8 @@ export class TableComponent  implements OnInit {
   form!: FormGroup;
 
   ngOnInit() {
+    this.screenSize = window.innerWidth;
+
     this.serviceD.getByTransactionId(this.transactionId).subscribe(data => {
       
       this.details = data.map(d => ({
@@ -104,7 +108,39 @@ export class TableComponent  implements OnInit {
     this.form.get('note')?.enable();
   }
 
-  save(): void {
+  save(detail: Detail): void {
+    this.isEditing = false;
+    this.form.get('transactionDate')?.disable();
+    this.form.get('amount')?.disable();
+    this.form.get('transactionTypeId')?.disable();
+    this.form.get('categoryId')?.disable();
+    this.form.get('note')?.disable();
+
+    const updateForm: DetailUpdateForm = {
+      id: detail.id,
+      transactionId: detail.transactionId,
+      transactionDate: this.form.controls['transactionDate'].value.toISOString().split('.')[0],
+      amount: this.form.controls['amount'].value,
+      transactionTypeId: this.form.controls['transactionTypeId'].value,
+      categoryId: this.form.controls['categoryId'].value,
+      note: this.form.controls['note'].value,
+    }
+
+    this.serviceD.update(updateForm).subscribe();
+    window.location.reload();
+  }
+
+  delete(detail: Detail): void {
+    this.deleteCount++;
+
+    if (this.deleteCount > 1) {
+      this.serviceD.delete(detail).subscribe();
+      this.deleteCount = 0;
+      window.location.reload();
+    }
+  }
+
+  close(): void {
     this.isEditing = false;
     this.form.get('transactionDate')?.disable();
     this.form.get('amount')?.disable();

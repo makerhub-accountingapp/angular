@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Detail, DetailTransactionCreateForm } from 'src/app/core/models/detail.model';
+import { Detail, DetailTransactionCreateForm, DetailUpdateForm } from 'src/app/core/models/detail.model';
 import { RepetitionEnum } from 'src/app/core/models/transaction.model';
 import { environment } from 'src/environments/environment.prod';
 
@@ -37,7 +37,15 @@ export class DetailService {
     return this.getById(id);
   }
 
-  create(form: DetailTransactionCreateForm) {
+  create(form: DetailTransactionCreateForm): Observable<Detail> {
     return this.http.post<Detail>(`${this.apiUrl}/detailtransaction`, form);
+  }
+
+  update(form: DetailUpdateForm): Observable<Detail> {
+    return this.http.put<Detail>(`${this.apiUrl}`, form)
+  }
+
+  delete(detail: Detail): Observable<Detail> {
+    return this.http.delete<Detail>(`${this.apiUrl}/${detail.id}`);
   }
 }

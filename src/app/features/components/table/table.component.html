@@ -14,37 +14,52 @@
 </div>
 
 @if (selectedDetail){
-<p-dialog header="Detail Information" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+<p-dialog header="Detail Information" [modal]="true" [(visible)]="visible" (onHide)="close()" [style]="{ width: '100%' }">
 
   <form [formGroup]="form">
 
-  <!----------- TransactionDate ---------->
-  <div class="flex items-center gap-4 mb-4 width-100 flex-row justify-end input-height align-start">
-    <p-floatlabel variant="on" class="width-100">
-      <p-datepicker [style]="{'width':'100%'}" formControlName="transactionDate" appendTo="body"
-        inputId="transactionDate" showIcon [showTime]="true" inputId="calendar-24h" iconDisplay="input" />
-    </p-floatlabel>
-  </div>
+    <!----------- TransactionDate ---------->
 
-  <!----------- Amount ---------->
+    <div class="flex-row input-height align-start">
+      <div>
+        <p-floatlabel variant="on">
+        <p-datepicker formControlName="transactionDate" appendTo="body" inputId="transactionDate" showIcon
+          [showTime]="true" inputId="calendar-24h" iconDisplay="input" />
+      </p-floatlabel>
+    </div>
+      <!----------- Amount ---------->
 
-  <div class="flex items-center gap-4 mb-4 width-100 flex-row justify-start input-height align-start">
+      <div class="flex-column">
+        <p-input-number formControlName="amount" id="amount" inputId="minmax" mode="decimal" [min]="-max" [max]="max"
+          placeholder="Amount" class="height-44px"/>
+
+        <!----------- Amount Error ---------->
+
+        @if (form.controls['amount'].invalid && form.controls['amount'].touched) {
+        <p-message severity="error" variant="simple" size="small">Required</p-message>
+        }
+      </div>
+    </div>
+
+    <!----------- Amount ---------->
+
+    <!-- <div class="flex items-center gap-4 mb-4 width-100 flex-row justify-start input-height align-start">
     <div class="flex-column width-100">
-      <p-input-number formControlName="amount" id="amount" inputId="minmax" mode="decimal" [min]="0" [max]="max"
-        placeholder="Amount" class="width-100 height-44px" />
+      <p-input-number formControlName="amount" id="amount" inputId="minmax" mode="decimal" [min]="-max" [max]="max"
+        placeholder="Amount" class="width-100 height-44px" /> -->
 
-      <!----------- Amount Error ---------->
+    <!----------- Amount Error ---------->
 
-      @if (form.controls['amount'].invalid && form.controls['amount'].touched) {
+    <!-- @if (form.controls['amount'].invalid && form.controls['amount'].touched) {
       <p-message severity="error" variant="simple" size="small">Required</p-message>
       }
     </div>
-  </div>
+  </div> -->
 
-  <!----------- TransactionType ---------->
+    <!----------- TransactionType ---------->
 
-  <div class="flex items-center gap-4 mb-8 width-100 input-height align-start">
-    <p-select formControlName="transactionTypeId" [options]="types" optionLabel="name" optionValue="id"
+    <div class="flex items-center gap-4 mb-8 width-100 input-height align-start">
+      <p-select formControlName="transactionTypeId" [options]="types" optionLabel="name" optionValue="id"
         placeholder="Transaction Type" class="width-100 height-44px" />
 
       <!----------- TransactionType Error ---------->
@@ -52,12 +67,12 @@
       @if (form.controls['transactionTypeId'].invalid && form.controls['transactionTypeId'].touched) {
       <p-message severity="error" variant="simple" size="small">Required</p-message>
       }
-  </div>
+    </div>
 
-  <!----------- Category ---------->
+    <!----------- Category ---------->
 
-  <div class="flex items-center gap-4 mb-8 width-100 input-height align-start">
-    <p-select formControlName="categoryId" [options]="categories" optionLabel="name" optionValue="id"
+    <div class="flex items-center gap-4 mb-8 width-100 input-height align-start">
+      <p-select formControlName="categoryId" [options]="categories" optionLabel="name" optionValue="id"
         placeholder="Category" class="width-100 height-44px" />
 
       <!----------- Category Error ---------->
@@ -65,30 +80,38 @@
       @if (form.controls['categoryId'].invalid && form.controls['categoryId'].touched) {
       <p-message severity="error" variant="simple" size="small">Required</p-message>
       }
-  </div>
+    </div>
 
-  <!----------- Note ---------->
+    <!----------- Note ---------->
 
-  <div class="flex items-center gap-4 mb-8">
+    <div class="flex items-center gap-4 mb-8">
 
-    <p-floatlabel variant="on" class="width-100">
-      <textarea formControlName="note" pTextarea id="over_label" rows="5" cols="30" style="resize: none"
-        class="h-full width-100 custom"></textarea>
-    </p-floatlabel>
-  </div>
+      <p-floatlabel variant="on" class="width-100">
+        <textarea formControlName="note" pTextarea id="over_label" rows="5" cols="30" style="resize: none"
+          class="h-full width-100 custom"></textarea>
+      </p-floatlabel>
+    </div>
 
-  <!----------- Buttons ---------->
+    <!----------- Buttons ---------->
 
-  <div class="width-100 flex-row justify-end margin-tp">
-    @if(isEditing){
-      <p-button label="Save" [style]="{'height': '40px', 'width': '90px'}" (onClick)="save()" />
-    }
-    @else {
+    <div class="width-100 flex-row justify-end margin-tp">
+      @if(isEditing){
+      <p-button label="Save" [style]="{'height': '40px', 'width': '90px'}" (onClick)="save(selectedDetail)"
+        [disabled]="form.invalid" />
+      }
+      @else {
       <p-button label="Update" [style]="{'height': '40px', 'width': '90px'}" (onClick)="update()" />
-    }
-    <p-button label="Delete" severity="danger" [style]="{'height': '40px', 'width': '90px', 'margin-left': '8px'}" />
-  </div>
+      }
 
-</form>
+        <p-button label="Delete" severity="danger" [style]="{'height': '40px', 'width': '90px', 'margin-left': '8px'}"
+          (onClick)="delete(selectedDetail)" />
+    </div>
+    <div class="flex-row justify-end">
+      @if (deleteCount == 1) {
+        <p style="color: #e53935; font-size: 14px;">To Confirm, tap once more.</p>
+        }
+    </div>
+
+  </form>
 </p-dialog>
 }
