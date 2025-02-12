@@ -14,9 +14,21 @@
 	border-color: #94a3b8;
 }
 
+textarea {
+	padding: 8px
+}
+
 textarea:disabled {
 	background-color: #cbd5e1 !important;
   color: #475569 !important;
 	opacity: 1;
 	padding: 8px
+}
+
+.input-height {
+  height: 65px;
+}
+
+.margin-tp {
+	margin-top: 15px;
 }

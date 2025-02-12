@@ -32,6 +32,7 @@ export class TableComponent  implements OnInit {
   visible: boolean = false;
   types!: TransactionType[];
   categories!: Category[];
+  isEditing: boolean = false;
 
   constructor(private serviceD: DetailService, private serviceTT: TransactionTypeService, private serviceC: CategoryService, private fb: FormBuilder) { 
     this.form = this.fb.group({
@@ -39,7 +40,7 @@ export class TableComponent  implements OnInit {
           amount: ['', [Validators.required], []],
           transactionTypeId: ['', [Validators.required], []],
           categoryId: ['', [Validators.required], []],
-          note: ['', [Validators.required], []]
+          note: ['', [], []]
         },
           {}
         );
@@ -92,5 +93,23 @@ export class TableComponent  implements OnInit {
     })
 
     this.visible = true;
+  }
+
+  update(): void {
+    this.isEditing = true;
+    this.form.get('transactionDate')?.enable();
+    this.form.get('amount')?.enable();
+    this.form.get('transactionTypeId')?.enable();
+    this.form.get('categoryId')?.enable();
+    this.form.get('note')?.enable();
+  }
+
+  save(): void {
+    this.isEditing = false;
+    this.form.get('transactionDate')?.disable();
+    this.form.get('amount')?.disable();
+    this.form.get('transactionTypeId')?.disable();
+    this.form.get('categoryId')?.disable();
+    this.form.get('note')?.disable();
   }
 }

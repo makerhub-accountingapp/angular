@@ -19,53 +19,52 @@
   <form [formGroup]="form">
 
   <!----------- TransactionDate ---------->
-  <div class="flex items-center gap-4 mb-4 width-100 flex-row justify-end">
+  <div class="flex items-center gap-4 mb-4 width-100 flex-row justify-end input-height align-start">
     <p-floatlabel variant="on" class="width-100">
       <p-datepicker [style]="{'width':'100%'}" formControlName="transactionDate" appendTo="body"
         inputId="transactionDate" showIcon [showTime]="true" inputId="calendar-24h" iconDisplay="input" />
-      <label for="date">Date</label>
     </p-floatlabel>
   </div>
 
   <!----------- Amount ---------->
 
-  <div class="flex items-center gap-4 mb-4 width-100 flex-row justify-start align-start">
+  <div class="flex items-center gap-4 mb-4 width-100 flex-row justify-start input-height align-start">
     <div class="flex-column width-100">
       <p-input-number formControlName="amount" id="amount" inputId="minmax" mode="decimal" [min]="0" [max]="max"
         placeholder="Amount" class="width-100 height-44px" />
 
       <!----------- Amount Error ---------->
 
-      <!-- @if (form.controls['amount'].invalid && form.controls['amount'].touched) {
+      @if (form.controls['amount'].invalid && form.controls['amount'].touched) {
       <p-message severity="error" variant="simple" size="small">Required</p-message>
-      } -->
+      }
     </div>
   </div>
 
   <!----------- TransactionType ---------->
 
-  <div class="flex items-center gap-4 mb-8 width-100">
+  <div class="flex items-center gap-4 mb-8 width-100 input-height align-start">
     <p-select formControlName="transactionTypeId" [options]="types" optionLabel="name" optionValue="id"
         placeholder="Transaction Type" class="width-100 height-44px" />
 
       <!----------- TransactionType Error ---------->
 
-      <!-- @if (form.controls['transactionTypeId'].invalid && form.controls['transactionTypeId'].touched) {
+      @if (form.controls['transactionTypeId'].invalid && form.controls['transactionTypeId'].touched) {
       <p-message severity="error" variant="simple" size="small">Required</p-message>
-      } -->
+      }
   </div>
 
   <!----------- Category ---------->
 
-  <div class="flex items-center gap-4 mb-8 width-100">
+  <div class="flex items-center gap-4 mb-8 width-100 input-height align-start">
     <p-select formControlName="categoryId" [options]="categories" optionLabel="name" optionValue="id"
         placeholder="Category" class="width-100 height-44px" />
 
       <!----------- Category Error ---------->
 
-      <!-- @if (form.controls['categoryId'].invalid && form.controls['categoryId'].touched) {
+      @if (form.controls['categoryId'].invalid && form.controls['categoryId'].touched) {
       <p-message severity="error" variant="simple" size="small">Required</p-message>
-      } -->
+      }
   </div>
 
   <!----------- Note ---------->
@@ -80,12 +79,14 @@
 
   <!----------- Buttons ---------->
 
-  <div class="width-100 flex-row justify-end">
-    <p-button label="Change" [style]="{'height': '40px', 'width': '90px'}" />
+  <div class="width-100 flex-row justify-end margin-tp">
+    @if(isEditing){
+      <p-button label="Save" [style]="{'height': '40px', 'width': '90px'}" (onClick)="save()" />
+    }
+    @else {
+      <p-button label="Update" [style]="{'height': '40px', 'width': '90px'}" (onClick)="update()" />
+    }
     <p-button label="Delete" severity="danger" [style]="{'height': '40px', 'width': '90px', 'margin-left': '8px'}" />
-  </div>
-  <div>
-    <p-button label="Close" severity="secondary" (click)="visible = false" [style]="{'height': '40px', 'width': '90px'}" />
   </div>
 
 </form>
