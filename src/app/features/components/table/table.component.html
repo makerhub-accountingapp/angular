@@ -32,6 +32,12 @@
       <textarea style="width: 100%; padding: 8px; border-color: gray; border-radius: 4px;">{{ selectedDetail.note }}</textarea>
     </div>
     <div class="flex justify-end gap-2">
+    </div>
+    <div>
+      <p-button label="Change" />
+      <p-button label="Delete" severity="danger"/>
+    </div>
+    <div>
       <p-button label="Close" severity="secondary" (click)="visible = false" />
     </div>
   </p-dialog>

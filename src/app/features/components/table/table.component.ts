@@ -38,13 +38,11 @@ export class TableComponent  implements OnInit {
   }
 
   showDialog(detail: Detail): void {
-    console.log(detail);
     this.selectedDetail = {
       ...detail,
       transactionType: {...detail.transactionType},
       category: {...detail.category},
     };
-    console.log(this.selectedDetail);
     this.visible = true;
   }
 }
