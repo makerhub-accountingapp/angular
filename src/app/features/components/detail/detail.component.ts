@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Detail } from 'src/app/core/models/detail.model';
+import { DetailService } from '../../services/detail.service';
 
 @Component({
   selector: 'app-detail',
@@ -7,8 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailComponent  implements OnInit {
 
-  constructor() { }
+  @Input({required: true}) id!: number; 
+  detail!: Detail;
+  visible: boolean = false;
 
-  ngOnInit() {}
+  constructor(private serviceD: DetailService) { }
 
+  ngOnInit() {
+    this.serviceD.getById(this.id).subscribe(data => {
+      this.detail = data;
+    })
+  }
 }

@@ -4,18 +4,21 @@ import { DetailService } from '../../services/detail.service';
 import { Detail } from 'src/app/core/models/detail.model';
 import { ButtonModule } from 'primeng/button';
 import { DatePipe } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
-  imports: [TableModule, ButtonModule, DatePipe]
+  imports: [TableModule, ButtonModule, DatePipe, DialogModule]
 })
 export class TableComponent  implements OnInit {
   @Input({required: true}) transactionId!: number;
   @Input({required: true}) height!: string;
   details!: Detail[];
   total: number = 0;
+  selectedDetail!: Detail;
+  visible: boolean = false;
 
   constructor(private serviceD: DetailService) { }
 
@@ -31,14 +34,17 @@ export class TableComponent  implements OnInit {
       for (let i = 0; i < this.details.length; i++) {
         this.total += this.details[i].amount;
       }
-
-      console.log(this.details);
     });
   }
 
-  //TODO Create showDialog
-  // showDialog(detail: Detail): void {
-  //   this.selectedDetail = detail;
-  //   this.visible = true;
-  // }
+  showDialog(detail: Detail): void {
+    console.log(detail);
+    this.selectedDetail = {
+      ...detail,
+      transactionType: {...detail.transactionType},
+      category: {...detail.category},
+    };
+    console.log(this.selectedDetail);
+    this.visible = true;
+  }
 }

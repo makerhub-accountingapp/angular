@@ -90,8 +90,6 @@ export class TransactionPage implements OnInit {
         setDate: new Date(data.setDate),
         endDate: data.endDate ? new Date(data.endDate) : null
       };
-      console.log(data);
-      console.log(this.transaction);
 
       const repetition = this.repetitions[data.repetition].name;
 

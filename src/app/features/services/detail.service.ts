@@ -33,6 +33,10 @@ export class DetailService {
     return this.get(undefined, undefined, transactionId, undefined, undefined, undefined, undefined) 
   }
 
+  getById(id: number): Observable<Detail> {
+    return this.getById(id);
+  }
+
   create(form: DetailTransactionCreateForm) {
     return this.http.post<Detail>(`${this.apiUrl}/detailtransaction`, form);
   }

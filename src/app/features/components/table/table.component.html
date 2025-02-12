@@ -1,33 +1,38 @@
 <p class="text-center bold margin-bottom-medium">Total : {{total}}</p>
 <div class="height-custom border-custom">
-<p-table [value]="details" stripedRows scrollable="true" [scrollHeight]="height">
+  <p-table [value]="details" stripedRows scrollable="true" [scrollHeight]="height">
     <ng-template #header>
     </ng-template>
     <ng-template #body let-detail>
-        <tr>
-            <td>{{detail.transactionDate | date:'dd/mm/yy HH:mm' }}</td>
-            <td>{{detail.amount}}</td>
-            <td>{{detail.category.name}}</td>
-        </tr>
+      <tr (click)="showDialog(detail)">
+        <td>{{detail.transactionDate | date:'dd/mm/yy HH:mm' }}</td>
+        <td>{{detail.amount}}</td>
+        <td>{{detail.category.name}}</td>
+      </tr>
     </ng-template>
-</p-table>
+  </p-table>
 </div>
 
-<!-- <p-dialog header="Detail Information" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
-    <span class="p-text-secondary block mb-8">Transaction details:</span>
+@if (selectedDetail){
+  <p-dialog header="Detail Information" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
     <div class="flex items-center gap-4 mb-4">
-      <label class="font-semibold w-24">Date</label>
-      <span>{{ selectedDetail?.transactionDate | date:'dd/MM/yy HH:mm' }}</span>
+      <span>{{ selectedDetail.transactionDate | date:'dd/MM/yy HH:mm' }}</span>
     </div>
     <div class="flex items-center gap-4 mb-4">
-      <label class="font-semibold w-24">Amount</label>
-      <span>{{ selectedDetail?.amount }}</span>
+      <span>{{ selectedDetail.amount }}€</span>
+    </div>
+      <div class="flex items-center gap-4 mb-8">
+        <span>{{ selectedDetail.category.name }}</span>
+      </div>
+    
+    <div class="flex items-center gap-4 mb-8">
+      <span>{{ selectedDetail.transactionType.name }}</span>
     </div>
     <div class="flex items-center gap-4 mb-8">
-      <label class="font-semibold w-24">Category</label>
-      <span>{{ selectedDetail?.category?.name }}</span>
+      <textarea style="width: 100%; padding: 8px; border-color: gray; border-radius: 4px;">{{ selectedDetail.note }}</textarea>
     </div>
     <div class="flex justify-end gap-2">
       <p-button label="Close" severity="secondary" (click)="visible = false" />
     </div>
-  </p-dialog> -->
+  </p-dialog>
+}
