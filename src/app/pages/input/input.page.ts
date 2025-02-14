@@ -34,11 +34,7 @@ import { Detail, DetailTransactionCreateForm } from 'src/app/core/models/detail.
 import { DetailService } from 'src/app/features/services/detail.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-
-export interface Repetition {
-  id: number;
-  name: string;
-}
+import { Repetition } from 'src/app/core/models/repetition.model';
 
 @Component({
   selector: 'app-input',
@@ -77,29 +73,28 @@ export class InputPage implements OnInit {
 
     /********** FormGroup setting **********/
 
-    this.form = this.fb.group(
-      {
-        name: ['', [Validators.required, Validators.minLength(1)], []],
-        amount: [
-          null,
-          [Validators.required, Validators.min(0), Validators.max(this.max)],
-          [],
-        ],
-        repetition: [1, [Validators.required], []],
-        transactionDate: [new Date(), [Validators.required], []],
-        endDate: [null],
-        transactionTypeId: [
-          undefined,
-          [Validators.required, TransactionValidator.optionValid],
-          [],
-        ],
-        categoryId: [
-          undefined,
-          [Validators.required, TransactionValidator.optionValid],
-          [],
-        ],
-        note: ['', [], []],
-      },
+    this.form = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(1)], []],
+      amount: [
+        null,
+        [Validators.required, Validators.min(0), Validators.max(this.max)],
+        [],
+      ],
+      repetition: [1, [Validators.required], []],
+      transactionDate: [new Date(), [Validators.required], []],
+      endDate: [null],
+      transactionTypeId: [
+        undefined,
+        [Validators.required, TransactionValidator.optionValid],
+        [],
+      ],
+      categoryId: [
+        undefined,
+        [Validators.required, TransactionValidator.optionValid],
+        [],
+      ],
+      note: ['', [], []],
+    },
       { validators: TransactionValidator.endDateRequiredValidator }
     );
 
@@ -165,14 +160,15 @@ export class InputPage implements OnInit {
         amount: amount,
         repetition: this.form.controls['repetition'].value,
         transactionDate: this.form.controls['transactionDate'].value.toISOString().split('.')[0],
-        endDate: this.form.controls['transactionDate'].value.toISOString().split('.')[0],
+
+        //TODO Add verification to endDate (endDate > transactionDate)
+        
+        endDate: this.form.controls['endDate'].value.toISOString().split('.')[0],
         transactionTypeId: this.form.controls['transactionTypeId'].value,
         categoryId: this.form.controls['categoryId'].value,
         note: this.form.controls['note'].value,
         accountId: 1,
       }
-
-      console.log(dtForm);
 
       this.serviceD.create(dtForm).subscribe(data => {
         this.createdEntity = data;
@@ -194,25 +190,6 @@ export class InputPage implements OnInit {
         }
       });
     }
-
-
-    console.log(this.form.valid);
-    console.log(this.form.controls['name'].valid);
-    console.log(this.form.controls['name'].value);
-    console.log(this.form.controls['amount'].valid);
-    console.log(this.form.controls['amount'].value);
-    console.log(this.form.controls['transactionDate'].valid);
-    console.log(this.form.controls['transactionDate'].value);
-    console.log(this.form.controls['repetition'].valid);
-    console.log(this.form.controls['repetition'].value);
-    console.log(this.form.controls['endDate'].valid);
-    console.log(this.form.controls['endDate'].value);
-    console.log(this.form.controls['transactionTypeId'].valid);
-    console.log(this.form.controls['transactionTypeId'].value);
-    console.log(this.form.controls['categoryId'].valid);
-    console.log(this.form.controls['categoryId'].value);
-    console.log(this.form.controls['note'].valid);
-    console.log(this.form.controls['note'].value);
   }
 }
 

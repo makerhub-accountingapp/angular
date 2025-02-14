@@ -8,7 +8,7 @@ export interface Transaction {
 	account: Account,
 	repetition: RepetitionEnum,
 	setDate: Date,
-	endDate: Date,
+	endDate: Date | null,
 	details: Detail[]
 }
 

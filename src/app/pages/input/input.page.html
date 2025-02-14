@@ -3,6 +3,7 @@
   <!----------- Form ---------->
 
   <form [formGroup]="form" class="
+      padding-page
       flex-column 
       height-100 
       width-100 
@@ -33,30 +34,30 @@
         justify-center">
 
         @if (isPositive) {
-        <p-button icon="pi pi-plus" (onClick)="changePositiveNegative()" class="margin-right-light"  />
+        <p-button icon="pi pi-plus" (onClick)="changePositiveNegative()" class="margin-right-light padding-top-3" />
         }
         @else {
         <p-button icon="pi pi-minus" (onClick)="changePositiveNegative()" class="margin-right-light padding-top-3" />
         }
       </div>
-<div class="flex-column width-100">
-      <p-input-number formControlName="amount" id="amount" inputId="minmax" mode="decimal" [min]="0" [max]="max"
-        placeholder="Amount" class="width-100 height-44px" />
+      <div class="flex-column width-100">
+        <p-input-number formControlName="amount" id="amount" inputId="minmax" mode="decimal" [min]="0" [max]="max"
+          placeholder="Amount" class="width-100 height-44px" />
 
-      <!----------- Amount Error ---------->
+        <!----------- Amount Error ---------->
 
-      @if (form.controls['amount'].invalid && form.controls['amount'].touched) {
-      <p-message severity="error" variant="simple" size="small">Required</p-message>
-      }
+        @if (form.controls['amount'].invalid && form.controls['amount'].touched) {
+        <p-message severity="error" variant="simple" size="small">Required</p-message>
+        }
       </div>
     </div>
 
-    <!----------- transactionDate ---------->
+    <!----------- TransactionDate ---------->
 
     <div class="width-100 flex-row justify-end">
       <p-floatlabel variant="on">
-        <p-datepicker  [style]="{'width':'100%'}" formControlName="transactionDate" appendTo="body" inputId="transactionDate" showIcon
-          [showTime]="true" inputId="calendar-24h" iconDisplay="input" />
+        <p-datepicker [style]="{'width':'100%'}" formControlName="transactionDate" appendTo="body"
+          inputId="transactionDate" showIcon [showTime]="true" inputId="calendar-24h" iconDisplay="input" />
         <label for="date">Date</label>
       </p-floatlabel>
     </div>
@@ -71,16 +72,15 @@
 
       <div>
         <p-floatlabel variant="on">
-          <p-datepicker  [style]="{'width':'100%'}" formControlName="endDate" appendTo="body" inputId="endDate" showIcon iconDisplay="input" />
+          <p-datepicker [style]="{'width':'100%'}" formControlName="endDate" appendTo="body" inputId="endDate" showIcon
+            iconDisplay="input" />
           <label for="endDate">Ending Date</label>
         </p-floatlabel>
 
-        <!-- <p-datepicker appendTo="body" formControlName="endDate" showIcon inputId="endDate" iconDisplay="input" [showOnFocus]="true"
-          placeholder="Ending date" /> -->
-
         <!----------- EndDate Error ---------->
 
-        @if (form.controls['repetition'].value != 1 && form.controls['endDate'].touched && !form.controls['endDate'].value) {
+        @if (form.controls['repetition'].value != 1 && form.controls['endDate'].touched &&
+        !form.controls['endDate'].value) {
         <p-message severity="error" variant="simple" size="small">Required</p-message>
         }
       </div>

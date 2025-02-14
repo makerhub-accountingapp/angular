@@ -18,5 +18,8 @@ export const routes: Routes = [
     path: 'input',
     loadComponent: () => import('./pages/input/input.page').then( m => m.InputPage)
   },
-
+  {
+    path: 'transaction/:id',
+    loadComponent: () => import('./pages/transaction/transaction.page').then( m => m.TransactionPage)
+  },
 ];

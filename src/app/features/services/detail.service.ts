@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Detail, DetailTransactionCreateForm } from 'src/app/core/models/detail.model';
+import { Observable } from 'rxjs';
+import { Detail, DetailTransactionCreateForm, DetailUpdateForm } from 'src/app/core/models/detail.model';
 import { RepetitionEnum } from 'src/app/core/models/transaction.model';
 import { environment } from 'src/environments/environment.prod';
 
@@ -14,11 +15,12 @@ export class DetailService {
   constructor(private http: HttpClient) { 
   }
 
-  get(name?: string, categoryId?: number, transactionTypeId?: number, repetition?: RepetitionEnum, startDate?: Date, endDate?: Date){
+  get(name?: string, categoryId?: number, transactionId?: number, transactionTypeId?: number, repetition?: RepetitionEnum, startDate?: Date, endDate?: Date){
 
     let params = new HttpParams();
     if (name) params = params.append('name', name);
     if (categoryId) params = params.append('categoryId', categoryId);
+    if (transactionId) params = params.append('transactionId', transactionId)
     if (transactionTypeId) params = params.append('transactionTypeId', transactionTypeId);
     if (repetition) params = params.append('repetition', repetition);
     if (startDate) params = params.append('startDate', startDate.toISOString());
@@ -27,7 +29,23 @@ export class DetailService {
     return this.http.get<Detail[]>(`${this.apiUrl}/filtered`, { params })
   }
 
-  create(form: DetailTransactionCreateForm) {
+  getByTransactionId(transactionId: number): Observable<Detail[]> {
+    return this.get(undefined, undefined, transactionId, undefined, undefined, undefined, undefined) 
+  }
+
+  getById(id: number): Observable<Detail> {
+    return this.getById(id);
+  }
+
+  create(form: DetailTransactionCreateForm): Observable<Detail> {
     return this.http.post<Detail>(`${this.apiUrl}/detailtransaction`, form);
+  }
+
+  update(form: DetailUpdateForm): Observable<Detail> {
+    return this.http.put<Detail>(`${this.apiUrl}`, form)
+  }
+
+  delete(detail: Detail): Observable<Detail> {
+    return this.http.delete<Detail>(`${this.apiUrl}/${detail.id}`);
   }
 }

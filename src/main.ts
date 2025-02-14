@@ -11,6 +11,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { DatePipe } from '@angular/common';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -19,6 +20,7 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes, withPreloading(PreloadAllModules)),
     importProvidersFrom(ToastModule),
     MessageService,
+    DatePipe,
     provideHttpClient(),
     provideAnimationsAsync(),
     providePrimeNG({
