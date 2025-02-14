@@ -14,24 +14,25 @@
 </div>
 
 @if (selectedDetail){
-<p-dialog header="Detail Information" [modal]="true" [(visible)]="visible" (onHide)="close()" [style]="{ width: '100%' }">
+<p-dialog header="Detail Information" [modal]="true" [(visible)]="visible" (onHide)="close()"
+  [style]="{ width: '100%' }">
 
   <form [formGroup]="form">
 
     <!----------- TransactionDate ---------->
 
-    <div class="flex-row input-height align-start">
-      <div>
+    <div class="flex-row input-height align-start space-between">
+      <div style="width:60%">
         <p-floatlabel variant="on">
-        <p-datepicker formControlName="transactionDate" appendTo="body" inputId="transactionDate" showIcon
-          [showTime]="true" inputId="calendar-24h" iconDisplay="input" />
-      </p-floatlabel>
-    </div>
+          <p-datepicker formControlName="transactionDate" appendTo="body" inputId="transactionDate" showIcon
+            [showTime]="true" inputId="calendar-24h" iconDisplay="input" />
+        </p-floatlabel>
+      </div>
       <!----------- Amount ---------->
 
-      <div class="flex-column">
-        <p-input-number formControlName="amount" id="amount" inputId="minmax" mode="decimal" [min]="-max" [max]="max"
-          placeholder="Amount" class="height-44px"/>
+      <div class="flex-column width-35">
+        <p-input-number  formControlName="amount" id="amount" inputId="minmax" mode="decimal" [min]="-max" [max]="max"
+          placeholder="Amount" class="height-44px inp-numb" [inputStyle]="{'width' : '100%'}" />
 
         <!----------- Amount Error ---------->
 
@@ -103,13 +104,13 @@
       <p-button label="Update" [style]="{'height': '40px', 'width': '90px'}" (onClick)="update()" />
       }
 
-        <p-button label="Delete" severity="danger" [style]="{'height': '40px', 'width': '90px', 'margin-left': '8px'}"
-          (onClick)="delete(selectedDetail)" />
+      <p-button label="Delete" severity="danger" [style]="{'height': '40px', 'width': '90px', 'margin-left': '8px'}"
+        (onClick)="delete(selectedDetail)" />
     </div>
     <div class="flex-row justify-end">
       @if (deleteCount == 1) {
-        <p style="color: #e53935; font-size: 14px;">To Confirm, tap once more.</p>
-        }
+      <p style="color: #e53935; font-size: 14px;">To Confirm, tap once more.</p>
+      }
     </div>
 
   </form>

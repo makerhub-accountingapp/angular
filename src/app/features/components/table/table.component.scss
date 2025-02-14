@@ -64,3 +64,21 @@ textarea:disabled {
 .width-80 {
 	width: 80%;
 }
+
+.width-35{
+	width: 35%;
+
+}
+.inp-numb {
+	width : 100%;
+	#minmax {
+		width: 100% !important;
+	}
+}
+input#amount input#minmax {
+	width: 100% !important; 
+
+}
+input#minmax.p-inputtext.p-component.p-inputnumber-input.p-filled {
+	width: 100% !important; 
+}

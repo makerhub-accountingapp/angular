@@ -20,10 +20,10 @@ export class HeaderComponent  implements OnInit {
     {id: 2, name: 'Sub', balance: 100, userId: 1, user: this.currentUser, transactions: []},
 
   ];
-  currentAccountId: number = 1;
+  currentAccountId!: number;
 
   constructor() {
-
+    this.currentAccountId = this.accounts[0].id;
   }
 
   ngOnInit() {
