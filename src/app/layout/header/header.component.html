@@ -3,10 +3,24 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title class="pointer" routerLink="/home">
-      <div class="text-center flex-row align-center justify-center">
-        <p>Accounting App</p>
-        <img src="../../../assets/icon/chevron-down-outline.svg" width="24" height="24">
+    <ion-title class="pointer title" routerLink="/home">
+      <div class="select-container text-center flex-row align-center justify-center">
+
+        <ion-select interface="popover" [(ngModel)]="currentAccountId">
+          @for (account of accounts; track $index) {
+            <ion-select-option [value]="account.id">{{ account.name }}</ion-select-option>
+          }
+        </ion-select>
+
+
+      <!-- <select>
+        @for (account of accounts; track $index) {
+          <option [value]="account.id">{{ account.name }}</option>
+        }
+      </select> -->
+
+
+
       </div>
     </ion-title>
     <ion-buttons slot="end">

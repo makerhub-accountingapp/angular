@@ -1,0 +1,24 @@
+.select-container {
+  position: relative;
+  display: inline-block;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+select:focus {
+  outline: none;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+option {
+  border-radius: 20px;
+}
