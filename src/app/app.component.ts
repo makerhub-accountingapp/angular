@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { IonApp, IonRouterOutlet, IonContent } from '@ionic/angular/standalone';
 import { TransactionMenuComponent } from './layout/header/transaction-menu/transaction-menu.component';
 import { HeaderComponent } from './layout/header/header.component';
+import { User } from './core/models/user.model';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,13 @@ import { HeaderComponent } from './layout/header/header.component';
 })
 export class AppComponent {
 
-  pages = [
-    { title: 'View history and statistics', url: '/report', icon: 'http://www.w3.org/2000/svg' },
-  ]
+  currentUser: User = {
+    id: 1,
+    email: 'test',
+    password: 'test',
+    isActive: true,
+    accounts: []
+  }
+
   constructor() {}
 }
