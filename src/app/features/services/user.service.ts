@@ -15,10 +15,14 @@ export class UserService {
 
   login(email: string, password: string): Observable<User> {
 
-    let params = new HttpParams();
-    params.append('email', email);
-    params.append('password', password);
+    let params = new HttpParams()
+    .set('email', email)
+    .set('password', password);
 
     return this.http.get<User>(`${this.apiUrl}/login`, { params });
+  }
+
+  getById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 }
