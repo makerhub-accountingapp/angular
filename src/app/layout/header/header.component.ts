@@ -1,9 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormsModule } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { IonButtons, IonButton, IonHeader, IonMenuButton, IonTitle, IonToolbar, IonSelect, IonList, IonItem, IonSelectOption } from '@ionic/angular/standalone';
+import { BehaviorSubject } from 'rxjs';
 import { Account } from 'src/app/core/models/account.model';
 import { User } from 'src/app/core/models/user.model';
+import { AccountService } from 'src/app/features/services/account.service';
+import { UserService } from 'src/app/features/services/user.service';
 
 
 @Component({
@@ -14,24 +17,36 @@ import { User } from 'src/app/core/models/user.model';
 })
 export class HeaderComponent  implements OnInit {
 
-  @Input({required: true}) currentUser!: User
-  accounts: Account[] = [
-    {id: 1, name: 'Main', balance: 50, userId: 1, user: this.currentUser, transactions: []},
-    {id: 2, name: 'Sub', balance: 100, userId: 1, user: this.currentUser, transactions: []},
-
-  ];
+  accounts: Account[] = [];
+  currentUser!: User;
   currentAccountId!: number;
+  isLoggedIn: boolean = false;
 
-  constructor() {
-    this.currentAccountId = this.accounts[0].id;
+  constructor(private serviceU: UserService, private serviceA: AccountService) {
+
+    const userId = localStorage.getItem('userId');
+    const accountId = localStorage.getItem('accountId');
+
+    if (userId) {
+      this.isLoggedIn = true;
+      this.serviceU.getById(parseInt(userId)).subscribe(data => {
+        this.currentUser = data;
+        this.accounts = [...data.accounts];
+
+        if (accountId) this.currentAccountId = parseInt(accountId)
+      });
+    }
+
   }
-
-  ngOnInit() {
-    
+  ngOnInit(): void {
   }
-
 
   openUserMenu(): void {
 
+  }
+
+  onSelectChange(event: any): void {
+    localStorage.setItem('accountId', (this.currentAccountId).toString())
+    console.log('header account Id : ' + this.currentAccountId)
   }
 }

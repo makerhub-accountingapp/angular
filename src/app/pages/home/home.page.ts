@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonContent, IonButton } from '@ionic/angular/standalone';
 import { ChartComponent } from 'src/app/features/components/chart/chart.component';
+import { AccountService } from 'src/app/features/services/account.service';
+import { UserService } from 'src/app/features/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -13,29 +15,35 @@ import { ChartComponent } from 'src/app/features/components/chart/chart.componen
 })
 export class HomePage implements OnInit {
 
+  accountId!: number;
+  total!: number;
   available: number = 0;
   balance: number = 0;
   expenses: number = -250;
   isEditing: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private serviceA: AccountService) { 
+  }
 
   ngOnInit() {
-    const storageValue = localStorage.getItem('balance');
-    if (storageValue){
-      this.balance = parseFloat(storageValue);
-    } else {
-      this.balance = 0;
-    }
-
-    this.available = this.balance + this.expenses;
     this.isEditing = false;
+    const storageValue = localStorage.getItem('accountId');
+
+    if (storageValue) {
+      this.accountId = parseInt(storageValue);
+
+      this.serviceA.getById(this.accountId).subscribe(data => {
+        this.balance = data.balance;
+        this.available = this.balance + this.expenses;
+        console.log('home accountId' + this.accountId)
+        console.log(data)
+      });
+    }
   }
 
   changeIsEditing(): void {
     this.isEditing = !this.isEditing;
     this.available = this.balance + this.expenses;
-    localStorage.setItem('balance', this.balance.toString());
   }
 
   redirectToInput(): void {

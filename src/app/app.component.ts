@@ -13,13 +13,5 @@ import { User } from './core/models/user.model';
 })
 export class AppComponent {
 
-  currentUser: User = {
-    id: 1,
-    email: 'test',
-    password: 'test',
-    isActive: true,
-    accounts: []
-  }
-
   constructor() {}
 }

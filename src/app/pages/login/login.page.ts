@@ -21,6 +21,7 @@ import { User } from 'src/app/core/models/user.model';
 import { UserService } from 'src/app/features/services/user.service';
 import { Router, RouterModule } from '@angular/router';
 import { PasswordModule } from 'primeng/password';
+import { AccountService } from 'src/app/features/services/account.service';
 
 @Component({
   selector: 'app-login',
@@ -51,6 +52,7 @@ export class LoginPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private serviceU: UserService,
+    private serviceA: AccountService,
     private router: Router
   ) {}
 
@@ -68,10 +70,11 @@ export class LoginPage implements OnInit {
     if (storageValue) {
       this.isLoggedIn = true;
       this.serviceU.getById(parseInt(storageValue)).subscribe((data) => {
-        this.currentUser = data;
-        console.log(this.currentUser)
+        this.currentUser = {...data,
+          accounts: [...data.accounts]
+        };
+        localStorage.setItem('accountId', (this.currentUser.accounts[0].id).toString())
       });
-
       this.router.navigate(['/home'])
     }
   }
@@ -80,15 +83,15 @@ export class LoginPage implements OnInit {
     const email = this.form.controls['email'].value;
     const password = this.form.controls['password'].value;
 
-    console.log(email);
-    console.log(password)
-
     this.serviceU.login(email, password).subscribe(data => {
-      this.currentUser = data;
+      this.currentUser = {...data,
+        accounts: [...data.accounts]
+      };
       
       if (this.currentUser) {
         this.isLoggedIn = true;
         localStorage.setItem('userId', this.currentUser.id.toString());
+        localStorage.setItem('accountId', (this.currentUser.accounts[0].id).toString())
         this.router.navigate(['/home']);
       }
     })
