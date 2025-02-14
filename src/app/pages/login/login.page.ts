@@ -20,6 +20,7 @@ import { ToastModule } from 'primeng/toast';
 import { User } from 'src/app/core/models/user.model';
 import { UserService } from 'src/app/features/services/user.service';
 import { Router, RouterModule } from '@angular/router';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-login',
@@ -39,6 +40,7 @@ import { Router, RouterModule } from '@angular/router';
     ButtonModule,
     ToastModule,
     RouterModule,
+    PasswordModule
   ],
 })
 export class LoginPage implements OnInit {
