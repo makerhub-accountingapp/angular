@@ -1,10 +1,10 @@
-<ion-menu side="start" menuId="transaction-menu" contentId="transaction-content">
+<ion-menu side="start" menuId="transaction-menu" contentId="main-content" inhert>
   <ion-header>
     <ion-toolbar>
       <ion-title>Transaction</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding" id="transaction-content">
+  <ion-content class="ion-padding">
     <ion-list>
       @for (p of pages; track p; let i = $index) {
       <ion-menu-toggle auto-hide="false">
