@@ -45,6 +45,7 @@ export class HeaderComponent  implements OnInit {
   }
 
   onSelectChange(event: any): void {
+    this.currentAccountId = event;
     localStorage.setItem('accountId', (this.currentAccountId).toString())
   }
 }
