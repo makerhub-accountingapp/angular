@@ -46,6 +46,8 @@ export class HeaderComponent  implements OnInit {
   }
 
   onSelectChange(event: any): void {
+    console.log('currentAccountId : ' + this.currentAccountId)
+    //TODO Accounts.orderbyDescending
     localStorage.setItem('accountId', (this.currentAccountId).toString())
     console.log('header account Id : ' + this.currentAccountId)
   }

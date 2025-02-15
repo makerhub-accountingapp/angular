@@ -39,7 +39,13 @@ export class HomePage implements OnInit {
 
       this.serviceA.getById(this.accountId).subscribe((data) => {
         this.balance = data.balance;
-      });
+
+      if (storageTotal) {
+        this.total = parseFloat(storageTotal);
+        this.available = this.balance + this.total;
+      }
+
+      else {
 
       const startDate = dayjs().startOf('month').toDate();
       const endDate = dayjs().endOf('month').toDate();
@@ -61,29 +67,30 @@ export class HomePage implements OnInit {
         localStorage.setItem('total', this.total.toString());
         this.available = this.balance + this.total;
         });
-
-      if (storageTotal) {
-        this.total = parseFloat(storageTotal);
-        this.available = this.balance + this.total;
       }
+    });
     }
   }
 
   changeIsEditing(): void {
-    this.isEditing = !this.isEditing;
+    this.isEditing = true;
+  }
+
+  changeBalance(): void {
+    this.isEditing = false;
     const userId = localStorage.getItem('userId');
 
     if (userId) {
-      const account = this.serviceA
-        .getById(this.accountId)
-        .subscribe((data) => {
+      this.serviceA.getById(this.accountId).subscribe((data) => {
           const form: AccountUpdateForm = {
             id: this.accountId,
             name: data.name,
             balance: this.balance,
             userId: parseInt(userId),
           };
-          this.serviceA.update(form);
+          this.serviceA.update(form).subscribe(data => {
+            this.balance = data.balance;
+          });
         });
     }
 
