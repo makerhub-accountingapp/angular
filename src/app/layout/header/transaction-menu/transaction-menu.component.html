@@ -1,7 +1,7 @@
 <ion-menu side="start" menuId="transaction-menu" contentId="main-content" inhert>
   <ion-header>
     <ion-toolbar>
-      <ion-title>Transaction</ion-title>
+      <p class="bold text-center">Transaction menu</p>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
@@ -9,7 +9,7 @@
       @for (p of pages; track p; let i = $index) {
       <ion-menu-toggle auto-hide="false">
         <ion-item class="border-solid-light pointer radius-light" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected" style="height: 60px; margin-bottom: 8px; display: flex;  align-items: center;">
-          <ion-avatar slot="start"><img [src]="'https://picsum.photos/80/80?random=' + $index" alt="avatar" /></ion-avatar>
+          <ion-avatar slot="start"><img [src]="p.icon" style="border-radius: 0%;" /></ion-avatar>
           <ion-label>{{ p.title }}</ion-label>
         </ion-item>
       </ion-menu-toggle>

@@ -12,8 +12,8 @@ import { UserMenuComponent } from '../user-menu/user-menu.component';
 export class TransactionMenuComponent  implements OnInit {
 
   pages = [
-    { title: 'Add new transaction', url: '/input', icon: 'http://www.w3.org/2000/svg'},
-    { title: 'View history and statistics', url: '/report', icon: 'http://www.w3.org/2000/svg' },
+    { title: 'Add new transaction', url: '/input', icon: '../../../../assets/icon/add-circle-outline.svg'},
+    { title: 'View history and statistics', url: '/report', icon: '../../../../assets/icon/stats-chart-outline.svg' },
   ]
 
   constructor() { }
