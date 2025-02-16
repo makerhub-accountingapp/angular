@@ -15,7 +15,7 @@ export class DetailService {
   constructor(private http: HttpClient) { 
   }
 
-  get(name?: string, categoryId?: number, transactionId?: number, transactionTypeId?: number, repetition?: RepetitionEnum, startDate?: Date, endDate?: Date){
+  get(name?: string, categoryId?: number, transactionId?: number, transactionTypeId?: number, repetition?: RepetitionEnum, accountId?: number, startDate?: Date, endDate?: Date){
 
     let params = new HttpParams();
     if (name) params = params.append('name', name);
@@ -23,8 +23,10 @@ export class DetailService {
     if (transactionId) params = params.append('transactionId', transactionId)
     if (transactionTypeId) params = params.append('transactionTypeId', transactionTypeId);
     if (repetition) params = params.append('repetition', repetition);
+    if (accountId) params = params.append('accountId', accountId);
     if (startDate) params = params.append('startDate', startDate.toISOString());
     if (endDate) params = params.append('endDate', endDate.toISOString());
+
     
     return this.http.get<Detail[]>(`${this.apiUrl}/filtered`, { params })
   }
