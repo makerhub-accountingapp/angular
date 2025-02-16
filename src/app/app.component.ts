@@ -4,22 +4,15 @@ import { IonApp, IonRouterOutlet, IonContent } from '@ionic/angular/standalone';
 import { TransactionMenuComponent } from './layout/header/transaction-menu/transaction-menu.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { User } from './core/models/user.model';
+import { UserMenuComponent } from "./layout/header/user-menu/user-menu.component";
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet, IonContent, RouterModule, TransactionMenuComponent, HeaderComponent],
+  imports: [IonApp, IonRouterOutlet, IonContent, RouterModule, TransactionMenuComponent, HeaderComponent, UserMenuComponent, UserMenuComponent],
 
 })
 export class AppComponent {
-
-  currentUser: User = {
-    id: 1,
-    email: 'test',
-    password: 'test',
-    isActive: true,
-    accounts: []
-  }
 
   constructor() {}
 }

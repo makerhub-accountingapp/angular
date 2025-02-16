@@ -9,3 +9,16 @@ export interface Account {
 	user: User,
 	transactions: Transaction[]
 }
+
+export interface AccountCreateForm {
+	name: string,
+	balance: number,
+	userId: number,
+}
+
+export interface AccountUpdateForm {
+	id: number,
+	name: string,
+	balance: number,
+	userId: number,
+}

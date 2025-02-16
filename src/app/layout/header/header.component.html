@@ -1,18 +1,28 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title class="pointer" routerLink="/">
-      <div class="text-center flex-row align-center justify-center">
-        <p>Accounting App</p>
-        <img src="../../../assets/icon/chevron-down-outline.svg" width="24" height="24">
-      </div>
-    </ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="openUserMenu()">
-        <img src="../../../assets/icon/person-outline.svg" width="24" height="24">
-      </ion-button>
-    </ion-buttons>
+    <div class="flex-row space-between header-padding">
+    @if (currentUser) {
+      <img src="../../../assets/icon/menu-outline.svg" width="24" height="24" (click)="openTransactionMenu()">
+    }
+
+      <ion-title>
+        @if (currentUser){
+          <div class="select-container text-center flex-row align-center justify-center">
+            <ion-select routerLink="/home" interface="popover" (ngModelChange)="onSelectChange($event)" [(ngModel)]="currentAccountId">
+              @for (account of accounts; track $index) {
+                <ion-select-option [value]="account.id">{{ account.name }}</ion-select-option>
+              }
+            </ion-select>
+          </div>
+        }
+        @else {
+          <p>Accounting App</p>
+        }
+      </ion-title>
+      
+      @if (currentUser) {
+        <img src="../../../assets/icon/person-outline.svg" width="24" height="24" (click)="openUserMenu()">
+      }
+    </div>
   </ion-toolbar>
 </ion-header>

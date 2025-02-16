@@ -1,0 +1,53 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <form [formGroup]="form" class="
+  padding-page
+  flex-column 
+  height-100 
+  width-100 
+  space-between 
+  align-center">
+  
+  <div style="height: 230px;" class=" width-100 flex-column space-between">
+  <h3 class="text-center">Login</h3>
+
+  <!----------- Email ---------->
+
+  <div class="width-100">
+    <p-floatlabel variant="on" class="width-100">
+      <input formControlName="email" pSize="large" pInputText id="email" autocomplete="off"
+        style="width: 100%; height: 44px;" />
+      <label for="email">Email</label>
+    </p-floatlabel>
+
+    <!----------- Email Error ---------->
+
+    <!-- @if (form.controls['name'].invalid && form.controls['name'].touched) {
+    <p-message severity="error" variant="simple" size="small">Required</p-message>
+    } -->
+  </div>
+
+  <!----------- Password ---------->
+
+  <div class="width-100">
+    <p-floatlabel variant="on" class="width-100">
+      <input formControlName="password" pSize="large" type="password" pInputText id="password" autocomplete="off"
+        style="width: 100%; height: 44px;" />
+      <label for="password">Password</label>
+    </p-floatlabel>
+
+    <!----------- Password Error ---------->
+
+    <!-- @if (form.controls['name'].invalid && form.controls['name'].touched) {
+    <p-message severity="error" variant="simple" size="small">Required</p-message>
+    } -->
+  </div>
+  
+</div>
+
+<p-toast></p-toast>
+  <p-button class="button-margin" label="Login" (onClick)="login()" />
+  <!-- <p-button label="Register" (onClick)="register()" [disabled]="form.invalid" /> -->
+
+  </form>
+</ion-content>
