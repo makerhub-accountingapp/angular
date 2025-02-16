@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 })
 export class HisotryComponent implements OnInit, OnChanges {
 
+  accountId!: number;
   details$: Observable<Detail[]> = new BehaviorSubject<Detail[]>([]);
   
   @Input() selectedDate!: Date;
@@ -36,8 +37,11 @@ export class HisotryComponent implements OnInit, OnChanges {
   loadDetails(): void {
     const startDate = dayjs(this.selectedDate).startOf('month').toDate();
     const endDate = dayjs(this.selectedDate).endOf('month').toDate();
+    const storageValue = localStorage.getItem('accountId');
 
-    this.details$ = this.service.get(undefined, undefined, undefined, undefined, undefined, startDate, endDate);
+    if (storageValue) this.accountId = parseInt(storageValue);
+
+    this.details$ = this.service.get(undefined, undefined, undefined, undefined, undefined, this.accountId, startDate, endDate);
   }
 
   goToTransaction(id: number) {

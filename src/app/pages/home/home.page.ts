@@ -31,45 +31,14 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.isEditing = false;
-    const storageAccount = localStorage.getItem('accountId');
-    const storageTotal = localStorage.getItem('total');
+    this.loadAccountData();
 
-    if (storageAccount) {
-      this.accountId = parseInt(storageAccount);
-
-      this.serviceA.getById(this.accountId).subscribe((data) => {
-        this.balance = data.balance;
-
-      if (storageTotal) {
-        this.total = parseFloat(storageTotal);
-        this.available = this.balance + this.total;
+    setInterval(() => {
+      const newAccountId = localStorage.getItem('accountId');
+      if(newAccountId && parseInt(newAccountId) !== this.accountId) {
+        this.loadAccountData();
       }
-
-      else {
-
-      const startDate = dayjs().startOf('month').toDate();
-      const endDate = dayjs().endOf('month').toDate();
-
-      this.serviceD
-        .get(
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          startDate,
-          endDate
-        )
-        .subscribe((data) => {
-          data.map((d) => {
-            this.total += d.amount;
-        });
-        localStorage.setItem('total', this.total.toString());
-        this.available = this.balance + this.total;
-        });
-      }
-    });
-    }
+    }, 1000);
   }
 
   changeIsEditing(): void {
@@ -82,16 +51,17 @@ export class HomePage implements OnInit {
 
     if (userId) {
       this.serviceA.getById(this.accountId).subscribe((data) => {
-          const form: AccountUpdateForm = {
-            id: this.accountId,
-            name: data.name,
-            balance: this.balance,
-            userId: parseInt(userId),
-          };
-          this.serviceA.update(form).subscribe(data => {
-            this.balance = data.balance;
-          });
+        const form: AccountUpdateForm = {
+          id: this.accountId,
+          name: data.name,
+          balance: this.balance,
+          userId: parseInt(userId),
+        };
+        this.serviceA.update(form).subscribe((data) => {
+          this.balance = data.balance;
+          this.loadAccountData();
         });
+      });
     }
 
     this.available = this.balance + this.total;
@@ -99,5 +69,35 @@ export class HomePage implements OnInit {
 
   redirectToInput(): void {
     this.router.navigate(['/input']);
+  }
+
+  loadAccountData(): void {
+    const storageAccount = localStorage.getItem('accountId');
+
+    if (storageAccount) {
+      this.accountId = parseInt(storageAccount);
+
+      this.serviceA.getById(this.accountId).subscribe((data) => {
+        this.balance = data.balance;
+
+        this.updateAvailable();
+      });
+    }
+  }
+
+  updateAvailable(): void {
+    this.total = 0;
+    const startDate = dayjs().startOf('month').toDate();
+    const endDate = dayjs().endOf('month').toDate();
+
+    this.serviceD
+      .get(undefined, undefined, undefined, undefined, undefined, this.accountId, startDate, endDate)
+      .subscribe((data) => {
+
+        data.map((d) => {
+          this.total += d.amount;
+        });
+        this.available = this.balance + this.total;
+      });
   }
 }
