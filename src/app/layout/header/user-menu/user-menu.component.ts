@@ -13,8 +13,8 @@ export class UserMenuComponent  implements OnInit {
   pages = [
     { title: 'User setting', url: '/user', icon: '../../../../assets/icon/person-outline.svg'},
     { title: 'Manage accounts', url: '/accounts', icon: '../../../../assets/icon/card-outline.svg' },
-    { title: 'Manage categories', url: '/report', icon: '../../../../assets/icon/pricetag-outline.svg' },
-    { title: 'Manage transaction types', url: '/report', icon: '../../../../assets/icon/file-tray-stacked-outline.svg' },
+    { title: 'Manage categories', url: '/categories', icon: '../../../../assets/icon/pricetag-outline.svg' },
+    { title: 'Manage transaction types', url: '/types', icon: '../../../../assets/icon/file-tray-stacked-outline.svg' },
   ]
 
   constructor(private menuCtrl: MenuController) { }

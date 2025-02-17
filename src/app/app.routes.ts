@@ -27,13 +27,22 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
-  },  {
+  },
+  {
     path: 'user',
     loadComponent: () => import('./pages/user/user.page').then( m => m.UserPage)
   },
   {
     path: 'accounts',
     loadComponent: () => import('./pages/accounts/accounts.page').then( m => m.AccountsPage)
+  },
+  {
+    path: 'categories',
+    loadComponent: () => import('./pages/categories/categories.page').then( m => m.CategoriesPage)
+  },
+  {
+    path: 'types',
+    loadComponent: () => import('./pages/types/types.page').then( m => m.TypesPage)
   },
 
 
