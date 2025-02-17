@@ -42,9 +42,12 @@
           <p-button label="Save" (onClick)="save(account.id)" [style]="{'height':'44px', 'width':'100px', 'padding':'0'}" />
         } @else {
           <p-button (onClick)="change(account.id)" [style]="{'height':'44px', 'width':'44px', 'padding':'0'}"><img src="../../../assets/icon/pencil-outline.svg" style="width: 24px; height: 24px;"></p-button>
-          <p-button (onClick)="change(account.id)" [style]="{'height':'44px', 'width':'44px', 'padding':'0'}" severity="danger"><img src="../../../assets/icon/trash-outline.svg" style="width: 24px; height: 24px;"></p-button>
+          <p-button (onClick)="delete(account.id)" [style]="{'height':'44px', 'width':'44px', 'padding':'0'}" severity="danger"><img src="../../../assets/icon/trash-outline.svg" style="width: 24px; height: 24px;"></p-button>
         }
       </div>
+    }
+    @if (clickCount == 1){
+      <p-message severity="error" variant="simple" size="small">To confirm, tap once more.</p-message>
     }
     </div>
   </form>
