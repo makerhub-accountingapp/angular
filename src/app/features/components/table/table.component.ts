@@ -126,6 +126,8 @@ export class TableComponent  implements OnInit {
       note: this.form.controls['note'].value,
     }
 
+    //TODO Add a success or fail message
+
     this.serviceD.update(updateForm).subscribe();
     window.location.reload();
   }

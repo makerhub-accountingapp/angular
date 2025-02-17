@@ -1,0 +1,185 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <h3 class="text-center title" (click)="onClickUser()">User</h3>
+
+  @if (user){
+
+  <!----------- Form ---------->
+
+  <form [formGroup]="form" class="
+  padding-page
+  flex-column 
+  height-60
+  width-100 
+  align-center">
+
+    <!----------- Default ---------->
+
+    @if (!isEditingEmail && !isEditingPassword) {
+
+    <div class="
+    padding-page
+    flex-column 
+    height-100
+    width-100 
+    align-center">
+
+      <!----------- Email ---------->
+
+      <div class="width-100 custom-height flex-row">
+        <p-floatlabel variant="on" class="width-70 height-44">
+          <input formControlName="currentemail" pSize="large" pInputText id="email" autocomplete="off"
+            style="width: 100%; height: 44px;" />
+          <label for="on_label">Email</label>
+        </p-floatlabel>
+
+        <p-button label="Change" (onClick)="changeIsEditingEmail()" [style]="{'height':'44px'}" />
+      </div>
+
+      <!----------- Password ---------->
+
+      <div class="width-100 custom-height flex-row">
+        <p-floatlabel variant="on" class="width-70 height-44">
+          <input formControlName="password" type="password" pSize="large" pInputText id="password"
+            autocomplete="off" style="width: 100%; height: 44px;" />
+          <label for="on_label">Password</label>
+        </p-floatlabel>
+
+        <p-button label="Change" (onClick)="changeIsEditingPassword()" [style]="{'height':'44px'}" />
+      </div>
+    </div>
+    <div class="width-80 flex-row space-between">
+      <p-button label="Logout" severity="secondary" [style]="{'width':'120px'}" (onClick)="logout()"></p-button>
+      <p-button label="Delete User" severity="danger" [style]="{'width':'120px'}" (onClick)="delete()"></p-button>
+    </div>
+    }
+
+    <!----------- Change Email ---------->
+
+    @if (isEditingEmail) {
+    <div class="
+    padding-page
+    flex-column 
+    height-100
+    width-100 
+    align-center">
+
+      <!----------- Current Email ---------->
+
+      <div class="width-100 custom-height">
+        <p-floatlabel variant="on" class="width-100">
+          <input formControlName="currentemail" pSize="large" pInputText id="currentemail" autocomplete="off"
+            style="width: 100%; height: 44px;" />
+          <label for="on_label">Current Email</label>
+        </p-floatlabel>
+      </div>
+
+      <!----------- New Email ---------->
+
+      <div class="width-100 custom-height">
+        <p-floatlabel variant="on" class="width-100">
+          <input formControlName="newemail" pSize="large" pInputText id="newemail" autocomplete="off"
+            style="width: 100%; height: 44px;" />
+          <label for="on_label">New Email</label>
+        </p-floatlabel>
+
+        <!----------- New Eamil Error ---------->
+
+        @if (form.controls['newemail'].invalid && form.controls['newemail'].touched) {
+        <p-message severity="error" variant="simple" size="small">Required</p-message>
+        }
+      </div>
+
+      <!----------- Confirm Password ---------->
+
+      <div class="width-100 custom-height">
+        <p-floatlabel variant="on" class="width-100">
+          <input type="password" formControlName="confirmpw" pSize="large" pInputText id="confirmpw" autocomplete="off"
+            style="width: 100%; height: 44px;" />
+          <label for="on_label">Confirm Password</label>
+        </p-floatlabel>
+
+        <!----------- Confirm Password Error ---------->
+
+        @if (form.controls['confirmpw'].invalid && form.controls['confirmpw'].touched) {
+        <p-message severity="error" variant="simple" size="small">Required</p-message>
+        }
+      </div>
+
+    </div>
+    }
+
+    <!----------- Change Password ---------->
+
+    @if (isEditingPassword) {
+    <div class="
+    padding-page
+    flex-column 
+    height-100
+    width-100 
+    align-center">
+
+      <!----------- Current Password ---------->
+
+      <div class="width-100 custom-height">
+        <p-floatlabel variant="on" class="width-100">
+          <input type="password" formControlName="currentpw" pSize="large" pInputText id="currentpw" autocomplete="off"
+            style="width: 100%; height: 44px;" />
+          <label for="on_label">Current Password</label>
+        </p-floatlabel>
+
+        <!----------- Current Password Error ---------->
+
+        @if (form.controls['currentpw'].invalid && form.controls['currentpw'].touched) {
+        <p-message severity="error" variant="simple" size="small">Required</p-message>
+        }
+      </div>
+
+      <!----------- New Password ---------->
+
+      <div class="width-100 custom-height">
+        <p-floatlabel variant="on" class="width-100">
+          <input type="password" formControlName="newpw" pSize="large" pInputText id="newpw" autocomplete="off"
+            style="width: 100%; height: 44px;" />
+          <label for="on_label">New Password</label>
+        </p-floatlabel>
+
+        <!----------- New Password Error ---------->
+
+        @if (form.controls['newpw'].invalid && form.controls['newpw'].touched) {
+        <p-message severity="error" variant="simple" size="small">Required</p-message>
+        }
+      </div>
+
+      <!----------- Confirm Password ---------->
+
+      <div class="width-100 custom-height">
+        <p-floatlabel variant="on" class="width-100">
+          <input type="password" formControlName="confirmpw" pSize="large" pInputText id="confirmpw" autocomplete="off"
+            style="width: 100%; height: 44px;" />
+          <label for="on_label">Confirm Password</label>
+        </p-floatlabel>
+
+        <!----------- Confirm Password Error ---------->
+
+        @if (form.controls['confirmpw'].invalid && form.controls['confirmpw'].touched) {
+        <p-message severity="error" variant="simple" size="small">Required</p-message>
+        }
+      </div>
+    </div>
+    }
+
+    @if(isEditingEmail) {
+    <p-button label="Save" (onClick)="saveEmail()"
+      [disabled]="form.controls['newemail'].invalid || form.controls['confirmpw'].invalid" />
+    }
+    @if(isEditingPassword) {
+      <p-button label="Save" (onClick)="savePassword()"
+        [disabled]="form.controls['currentpw'].invalid || form.controls['newpw'].invalid || form.controls['confirmpw'].invalid" />
+      }
+    @if (isIncorrectPass) {
+    <p-message severity="error" variant="simple" size="small" class="ion-padding">Confirm password incorrect.</p-message>
+    }
+  </form>
+  }
+</ion-content>

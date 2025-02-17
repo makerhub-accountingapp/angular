@@ -115,8 +115,6 @@ export class InputPage implements OnInit {
       { id: 4, name: 'Monthly' },
       { id: 5, name: 'Yearly' },
     ];
-
-    setTimeout(() => console.log(this.form.errors), 20000)
   }
 
   /********** Methods **********/
@@ -162,6 +160,7 @@ export class InputPage implements OnInit {
         transactionDate: this.form.controls['transactionDate'].value.toISOString().split('.')[0],
 
         //TODO Add verification to endDate (endDate > transactionDate)
+        //TODO Add success or fail message
         
         endDate: this.form.controls['endDate'].value.toISOString().split('.')[0],
         transactionTypeId: this.form.controls['transactionTypeId'].value,

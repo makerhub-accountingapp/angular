@@ -1,27 +1,28 @@
 <ion-header>
   <ion-toolbar>
     <div class="flex-row space-between header-padding">
-    @if (currentUser) {
+      @if (currentUser) {
       <img src="../../../assets/icon/menu-outline.svg" width="24" height="24" (click)="openTransactionMenu()">
-    }
+      }
 
       <ion-title>
         @if (currentUser){
-          <div class="select-container text-center flex-row align-center justify-center">
-            <ion-select routerLink="/home" interface="popover" (ngModelChange)="onSelectChange($event)" [(ngModel)]="currentAccountId">
-              @for (account of accounts; track $index) {
-                <ion-select-option [value]="account.id">{{ account.name }}</ion-select-option>
-              }
-            </ion-select>
-          </div>
+        <div class="select-container text-center flex-row align-center justify-center">
+          <ion-select routerLink="/home" interface="popover" (ngModelChange)="onSelectChange($event)"
+            [(ngModel)]="currentAccountId">
+            @for (account of accounts; track $index) {
+            <ion-select-option [value]="account.id">{{ account.name }}</ion-select-option>
+            }
+          </ion-select>
+        </div>
         }
         @else {
-          <p>Accounting App</p>
+        <p>Accounting App</p>
         }
       </ion-title>
-      
+
       @if (currentUser) {
-        <img src="../../../assets/icon/settings-outline.svg" width="24" height="24" (click)="openUserMenu()">
+      <img src="../../../assets/icon/settings-outline.svg" width="24" height="24" (click)="openUserMenu()">
       }
     </div>
   </ion-toolbar>

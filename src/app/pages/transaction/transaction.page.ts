@@ -130,6 +130,8 @@ export class TransactionPage implements OnInit {
     if (this.form.get('repetition')?.value != 1) {
       this.form.get('endDate')?.enable(); 
     }
+
+    //TODO Add success or fail message
   }
 
   onChangeRepeat() {

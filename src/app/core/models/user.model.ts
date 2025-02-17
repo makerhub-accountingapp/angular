@@ -7,3 +7,10 @@ export interface User {
 	isActive: boolean,
 	accounts: Account[]	
 }
+
+export interface UserUpdateForm {
+	id: number,
+	email: string,
+	password: string,
+	isActive: boolean,
+}
