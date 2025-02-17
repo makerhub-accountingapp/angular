@@ -48,4 +48,6 @@ export class HeaderComponent  implements OnInit {
     this.currentAccountId = event;
     localStorage.setItem('accountId', (this.currentAccountId).toString())
   }
+
+  //TODO Fix but : when clicking user setting, transaction-menu opens
 }
