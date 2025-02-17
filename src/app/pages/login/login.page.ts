@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -53,7 +53,8 @@ export class LoginPage implements OnInit {
     private fb: FormBuilder,
     private serviceU: UserService,
     private serviceA: AccountService,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit() {
@@ -92,6 +93,9 @@ export class LoginPage implements OnInit {
         this.isLoggedIn = true;
         localStorage.setItem('userId', this.currentUser.id.toString());
         localStorage.setItem('accountId', (this.currentUser.accounts[0].id).toString())
+        this.ngZone.runOutsideAngular(() => {
+          window.location.reload();
+        })
         this.router.navigate(['/home']);
       }
     })

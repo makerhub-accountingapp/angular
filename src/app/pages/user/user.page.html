@@ -48,6 +48,10 @@
         <p-button label="Change" (onClick)="changeIsEditingPassword()" [style]="{'height':'44px'}" />
       </div>
     </div>
+    <div class="width-80 flex-row space-between">
+      <p-button label="Logout" severity="secondary" [style]="{'width':'120px'}" (onClick)="logout()"></p-button>
+      <p-button label="Delete User" severity="danger" [style]="{'width':'120px'}" (onClick)="delete()"></p-button>
+    </div>
     }
 
     <!----------- Change Email ---------->

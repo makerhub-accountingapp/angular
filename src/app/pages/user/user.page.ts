@@ -19,6 +19,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { ButtonModule } from 'primeng/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -47,7 +48,7 @@ export class UserPage implements OnInit {
   isIncorrectPass: boolean = false;
   isNotCorresponding: boolean = false;
 
-  constructor(private serviceU: UserService, private fb: FormBuilder) {
+  constructor(private serviceU: UserService, private fb: FormBuilder, private router: Router) {
     this.form = this.fb.group({
       currentemail: ['', [], []],
       newemail: ['', [Validators.required], []],
@@ -163,5 +164,21 @@ export class UserPage implements OnInit {
     this.form.get('currentpw')?.reset();
     this.form.get('newpw')?.reset();
     this.form.get('confirmpw')?.reset();
+  }
+
+  logout(): void {
+    this.serviceU.logout();
+    this.router.navigate(['/login']);
+  }
+
+  delete(): void {
+    const form: UserUpdateForm = {
+      id: this.user.id,
+      email: this.user.email,
+      password: this.user.password,
+      isActive: false
+    }
+
+    this.serviceU.update(form).subscribe(data => this.logout())
   }
 }
