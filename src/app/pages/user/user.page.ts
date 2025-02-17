@@ -14,7 +14,7 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { UserService } from 'src/app/features/services/user.service';
-import { User } from 'src/app/core/models/user.model';
+import { User, UserUpdateForm } from 'src/app/core/models/user.model';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
@@ -44,11 +44,14 @@ export class UserPage implements OnInit {
   user!: User;
   isEditingEmail: boolean = false;
   isEditingPassword: boolean = false;
+  isIncorrectPass: boolean = false;
+  isNotCorresponding: boolean = false;
 
   constructor(private serviceU: UserService, private fb: FormBuilder) {
     this.form = this.fb.group({
       currentemail: ['', [], []],
       newemail: ['', [Validators.required], []],
+      password: ['hidden', [], []],
       currentpw: ['', [Validators.required], []],
       newpw: ['', [Validators.required], []],
       confirmpw: ['', [Validators.required], []]
@@ -56,6 +59,10 @@ export class UserPage implements OnInit {
   }
 
   ngOnInit() {
+    this.loadUser();
+  }
+
+  loadUser(): void {
     const storageUserId = localStorage.getItem('userId');
 
     if (storageUserId) {
@@ -63,22 +70,80 @@ export class UserPage implements OnInit {
         this.user = data;
         this.form.patchValue({
           currentemail: data.email,
-          currentpw: 'hidden'
+          password: data.password
         });
         this.form.get('currentemail')?.disable();
-        this.form.get('currentpw')?.disable();
+        this.form.get('password')?.disable();
       });
     }
   }
 
-  save(): void {
-    this.isEditingEmail = false;
-    this.isEditingPassword = false;
+  saveEmail(): void {
+    const confirm = this.form.controls['confirmpw'].value;
 
-    this.form.patchValue({currentpw: 'hidden'});
-    this.form.get('currentemail')?.disable();
-    this.form.get('currentpw')?.disable();
+    if (confirm != this.user.password) this.isIncorrectPass = true;
 
+    else {
+      this.isIncorrectPass = false;
+      this.isEditingEmail = false;
+      this.form.get('currentemail')?.disable();
+      let updateForm: UserUpdateForm;
+
+      const storageUserId = localStorage.getItem('userId');
+
+      if (storageUserId) {
+        updateForm = {
+          id: parseInt(storageUserId),
+          email: this.form.controls['newemail'].value,
+          password: this.user.password,
+          isActive: true
+        }
+
+        this.serviceU.update(updateForm).subscribe(data => {
+          this.loadUser();
+          this.form.get('newemail')?.reset();
+          this.form.get('confirmpw')?.reset();
+        });
+      }
+    }
+  }
+
+  savePassword(): void {
+    const currentpw = this.form.controls['currentpw'].value;
+    const newpw = this.form.controls['newpw'].value;
+    const confirm = this.form.controls['confirmpw'].value;
+
+    if (currentpw != this.user.password) this.isIncorrectPass = true;
+    else if (newpw != confirm) this.isNotCorresponding = true;
+
+    else {
+      this.isIncorrectPass = false;
+      this.isNotCorresponding = false;
+      this.isEditingPassword = false;
+      this.form.get('currentpw')?.disable();
+      this.form.get('newpw')?.disable();
+      this.form.get('confirmpw')?.disable();
+      
+      let updateForm: UserUpdateForm;
+
+      const storageUserId = localStorage.getItem('userId');
+
+      if (storageUserId) {
+        updateForm = {
+          id: parseInt(storageUserId),
+          email: this.user.email,
+          password: newpw,
+          isActive: true
+        }
+
+        this.serviceU.update(updateForm).subscribe(data => {
+          this.loadUser();
+          this.form.get('currentpw')?.reset();
+          this.form.get('newpw')?.reset();
+          this.form.get('confirmpw')?.reset();
+        });
+      }
+    }
   }
 
   changeIsEditingEmail(): void {
@@ -87,7 +152,16 @@ export class UserPage implements OnInit {
 
   changeIsEditingPassword(): void {
     this.isEditingPassword = true;
-    this.form.patchValue({currentpw: ""});
+    this.form.patchValue({ currentpw: "" });
     this.form.get('currentpw')?.enable();
+  }
+
+  onClickUser(): void {
+    this.isEditingEmail = false;
+    this.isEditingPassword =false;
+    this.form.get('newemail')?.reset();
+    this.form.get('currentpw')?.reset();
+    this.form.get('newpw')?.reset();
+    this.form.get('confirmpw')?.reset();
   }
 }

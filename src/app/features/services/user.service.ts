@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from 'src/app/core/models/user.model';
+import { User, UserUpdateForm } from 'src/app/core/models/user.model';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
@@ -31,6 +31,10 @@ export class UserService {
   getById(id: number): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
+
+  update(form: UserUpdateForm): Observable<User> {
+    return this.http.put<User>(this.apiUrl, form);
+  } 
 
   setCurrentUser(user: User | null): void {
     this.currentUserSubject.next(user);
