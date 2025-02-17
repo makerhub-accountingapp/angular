@@ -1,0 +1,55 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <h3 class="text-center title">Accounts</h3>
+
+  @if (accounts){
+
+  <!----------- Form ---------->
+
+  <form [formGroup]="form" class="
+  padding-page
+  flex-column 
+  height-60
+  width-100 
+  align-center">
+
+    <div class="
+    padding-page
+    flex-column 
+    height-100
+    width-100 
+    align-center">
+
+    <div class="width-100 flex-row custom-margin">
+      <p-floatlabel variant="on" class="width-70 height-44">
+        <input formControlName="newName" pSize="large" pInputText id="newName" autocomplete="off"
+          style="width: 100%; height: 44px;" />
+          <label>New Account</label>
+      </p-floatlabel>
+
+        <p-button label="Add" (onClick)="add()" [style]="{'height':'44px', 'width':'100px'}" />
+    </div>
+
+      <!----------- Account ---------->
+
+      @for (account of accounts; track $index) {
+      <div class="width-100 flex-row justify-center">
+        <p-floatlabel variant="on" class="width-70 height-44">
+          <input [formControlName]="'account' + account.id" pSize="large" pInputText [id]="'account' + account.id" autocomplete="off"
+            style="width: 100%; height: 44px;" />
+        </p-floatlabel>
+
+        @if (editingId == account.id) {
+          <p-button label="Save" (onClick)="save(account.id)" [style]="{'height':'44px', 'width':'100px', 'padding':'0'}" />
+        } @else {
+          <p-button (onClick)="change(account.id)" [style]="{'height':'44px', 'width':'44px', 'padding':'0'}"><img src="../../../assets/icon/pencil-outline.svg" style="width: 24px; height: 24px;"></p-button>
+          <p-button (onClick)="delete(account.id)" [style]="{'height':'44px', 'width':'44px', 'padding':'0'}" severity="danger"><img src="../../../assets/icon/trash-outline.svg" style="width: 24px; height: 24px;"></p-button>
+        }
+      </div>
+    }
+    @if (clickCount == 1){
+      <p-message severity="error" variant="simple" size="small">To confirm, tap once more.</p-message>
+    }
+    </div>
+  </form>
+}
+</ion-content>

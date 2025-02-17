@@ -13,4 +13,8 @@ export class AccountService extends BaseService<Account, AccountCreateForm, Acco
     super(http);
     this.setApiUrl('Account');
   }
+
+  getByUserId(userId: number): Observable<Account[]> {
+    return this.http.get<Account[]>(`${this.apiUrl}/userId/${userId}`);
+  }
 }
