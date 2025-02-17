@@ -32,16 +32,17 @@
       <!----------- Account ---------->
 
       @for (account of accounts; track $index) {
-      <div class="width-100 flex-row">
+      <div class="width-100 flex-row justify-center">
         <p-floatlabel variant="on" class="width-70 height-44">
           <input [formControlName]="'account' + account.id" pSize="large" pInputText [id]="'account' + account.id" autocomplete="off"
             style="width: 100%; height: 44px;" />
         </p-floatlabel>
 
         @if (editingId == account.id) {
-          <p-button label="Save" (onClick)="save(account.id)" [style]="{'height':'44px', 'width':'100px'}" />
+          <p-button label="Save" (onClick)="save(account.id)" [style]="{'height':'44px', 'width':'100px', 'padding':'0'}" />
         } @else {
-          <p-button label="Change" (onClick)="change(account.id)" [style]="{'height':'44px', 'width':'100px'}" />
+          <p-button (onClick)="change(account.id)" [style]="{'height':'44px', 'width':'44px', 'padding':'0'}"><img src="../../../assets/icon/pencil-outline.svg" style="width: 24px; height: 24px;"></p-button>
+          <p-button (onClick)="change(account.id)" [style]="{'height':'44px', 'width':'44px', 'padding':'0'}" severity="danger"><img src="../../../assets/icon/trash-outline.svg" style="width: 24px; height: 24px;"></p-button>
         }
       </div>
     }

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-import { Account } from 'src/app/core/models/account.model';
+import { Account, AccountCreateForm } from 'src/app/core/models/account.model';
 import { AccountService } from 'src/app/features/services/account.service';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -21,25 +21,39 @@ export class AccountsPage implements OnInit {
   accounts!: Account[];
   editingId!: number | null;
   form!: FormGroup
+  isAdded: boolean = false;
 
-  constructor(private serviceA: AccountService, private fb: FormBuilder) { }
+  constructor(private serviceA: AccountService, private fb: FormBuilder, private ngZone: NgZone) { }
 
   ngOnInit() {
-    const storageUser = localStorage.getItem('userId');
-
-    if (storageUser) {
-      this.serviceA.getByUserId(parseInt(storageUser)).subscribe(data => {
-        this.accounts = data;
-
-        this.initForm();
-        this.patchForm();
-        this.disableAll();
-      });
-    }
+    this.initPage();
   }
 
   add(): void {
+    const userId = localStorage.getItem('userId');
+    const newName = this.form.controls['newName'].value;
 
+    if (userId && newName) {
+      const form: AccountCreateForm = {
+        name: newName,
+        balance: 0,
+        userId: parseInt(userId)
+      }
+
+      this.serviceA.create(form).subscribe(data => {
+        if (data) {
+          this.isAdded = true;
+        }
+
+        setTimeout(() => {
+          this.isAdded = false;
+        }, 5000);
+      });
+    }
+    this.initPage();
+    this.ngZone.runOutsideAngular(() => {
+      window.location.reload();
+    });
   }
 
   change(id: number): void {
@@ -55,13 +69,27 @@ export class AccountsPage implements OnInit {
     this.form.get('newName')?.enable();
   }
 
+  initPage(): void {
+    const storageUser = localStorage.getItem('userId');
+
+    if (storageUser) {
+      this.serviceA.getByUserId(parseInt(storageUser)).subscribe(data => {
+        this.accounts = data;
+
+        this.initForm();
+        this.patchForm();
+        this.disableAll();
+      });
+    }
+  }
+
   initForm() {
     const controls: { [key: string]: FormControl } = {};
 
     this.accounts.forEach((account, index) => {
       controls['account' + account.id] = new FormControl('');
     });
-    
+
     controls['newName'] = new FormControl('');
 
     this.form = this.fb.group(controls);
